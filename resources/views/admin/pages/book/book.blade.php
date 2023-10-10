@@ -94,12 +94,13 @@
                                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name En</label>
                                                         <input type="text" name="name_en" class="form-control form-control-solid"  value="{{$data->name_en}}" placeholder="Enter Book Name English"/>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6 fv-row">
+
                                                     <div class="col-md-12 fv-row">
                                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Total Pages</label>
                                                         <input type="text" name="total_pages" class="form-control form-control-solid"  value="{{$data->total_pages}}" placeholder="Enter Book Total Pages"/>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-6 fv-row">
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-6 required">Status</label>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check me-5">

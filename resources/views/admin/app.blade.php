@@ -19,7 +19,7 @@
         <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <a href="#">
-                    <img alt="Logo" src="{{asset('backend/assets/media/logos/demo13.svg')}}" class="h-15px logo" />
+                    <h4 style="color: white">Unfinished Memory</h4>
                 </a>
                 <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle me-n2" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
                     <i class="ki-outline ki-double-left fs-1 rotate-180"></i>
@@ -34,10 +34,9 @@
                                 <span class="menu-icon">
                                     <i class="ki-outline ki-element-11 fs-2"></i>
                                 </span>
+
                                 <span class="menu-title">Dashboards</span>
                             </span>
-
-
                         </div>
 
                         <div class="menu-item pt-5">
@@ -206,7 +205,14 @@
                                         <a href="#" class="menu-link px-5">Account Settings</a>
                                     </div>
                                     <div class="menu-item px-5">
-                                        <a href="#" class="menu-link px-5">Sign Out</a>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <x-dropdown-link :href="route('logout')"
+                                                             onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                                {{ __('Log Out') }}
+                                            </x-dropdown-link>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

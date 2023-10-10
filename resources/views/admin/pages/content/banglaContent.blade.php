@@ -48,21 +48,6 @@
                                 <option value="">Select Chapter</option>
                             </select>
                         </div>
-{{--                        <div class="form-group mb-5">--}}
-{{--                            <label for="page_number" class="required fs-6 fw-semibold mb-2">Page Number</label>--}}
-{{--                            <select name="page_no" class="form-select form-select-solid">--}}
-{{--                                <option value="">Select Page Number</option>--}}
-{{--                                @if ($chapters && count($chapters) > 0)--}}
-{{--                                    @foreach ($chapters as $chapter)--}}
-{{--                                        @if ($chapter->total_pages > 0)--}}
-{{--                                            @for ($i = 1; $i <= $chapter->total_pages; $i++)--}}
-{{--                                                <option value="{{ $i }}">{{ $i }}</option>--}}
-{{--                                            @endfor--}}
-{{--                                        @endif--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
                         <div id="text" style="display: none;">
                             <div class="row">
                                 <div class="col-12">
