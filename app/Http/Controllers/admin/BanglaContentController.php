@@ -27,10 +27,12 @@ class BanglaContentController extends Controller
         if($request->type == "text") {
             try {
                 $bengali_lines = [];
+
                 foreach(json_decode(request('lines_array'), true) as $line)
                 {
-                    array_push($bengali_lines, $line);
+                    array_push($bengali_lines, trim(html_entity_decode($line)));
                 }
+
                 if(count($bengali_lines) != 0)
                 {
                     for($i=0; $i<count($bengali_lines); $i++)
