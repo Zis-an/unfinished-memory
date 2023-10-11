@@ -121,79 +121,6 @@
 
     </script>
 
-    <script>
-        // Get references to the select element and input field containers
-        const dropdown = document.getElementById("type");
-        const option1Fields = document.getElementById("text");
-        const option2Fields = document.getElementById("image");
-        // Add an event listener to the dropdown
-        dropdown.addEventListener("change", function() {
-            if (dropdown.value === "text") {
-                // Show Option 1 input fields and hide Option 2 input fields
-                option1Fields.style.display = "block";
-                option2Fields.style.display = "none";
-            } else if (dropdown.value === "image") {
-                // Show Option 2 input fields and hide Option 1 input fields
-                option1Fields.style.display = "none";
-                option2Fields.style.display = "block";
-            } else {
-                // Hide both input field containers if neither option is selected
-                option1Fields.style.display = "none";
-                option2Fields.style.display = "none";
-            }
-        });
-    </script>
-
-    <script>
-        const linesArray = [];
-        CKEDITOR.replace('kt_docs_ckeditor_classic');
-        function removeHTMLTags(input) {
-            return input.replace(/<\/?[^>]+(>|$)/g, "");
-        }
-        // Function to update the preview based on the CKEditor content
-        function updatePreview() {
-            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic;
-            const separator = '।';
-            const textareaValue = editor.getData();
-            const lines = textareaValue.split(separator);
-            if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
-                lines.pop();
-            }
-            if(lines.length > 0) {
-                lines.pop();
-            }
-            const totalLineCount = lines.length;
-            const previewHTML = `<div class="mb-3"><strong>Total Line:</strong> ${totalLineCount}</div>` + lines.map(line => {
-                const trimmedLine = line.trim().concat('।');
-                const lineWithoutTags = removeHTMLTags(trimmedLine);
-                linesArray.push(lineWithoutTags);
-                return `
-                    <div class="row mt-7">
-                        <div class="col-12 col-md-10">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Line Bn</label>
-                            <input type="text" class="form-control form-control-solid" disabled value="${lineWithoutTags}" placeholder="Enter Line in Bangla"/>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            document.getElementById('preview').innerHTML = previewHTML;
-            document.getElementById('lines_array').value = JSON.stringify(linesArray);
-        }
-
-
-        CKEDITOR.instances.kt_docs_ckeditor_classic.on('change', function() {
-            if (CKEDITOR.instances.kt_docs_ckeditor_classic.getData().trim() !== '') {
-                updatePreview();
-            } else {
-                document.getElementById('preview').innerHTML = '';
-            }
-        });
-        updatePreview();
-
-
-
-    </script>
-
     <!-- Chapter & Book -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -218,4 +145,106 @@
             });
         });
     </script>
+
+    <!-- Select Type Image or Text -->
+    <script>
+        // Get references to the select element and input field containers
+        const dropdown = document.getElementById("type");
+        const option1Fields = document.getElementById("text");
+        const option2Fields = document.getElementById("image");
+        // Add an event listener to the dropdown
+        dropdown.addEventListener("change", function() {
+            if (dropdown.value === "text") {
+                // Show Option 1 input fields and hide Option 2 input fields
+                option1Fields.style.display = "block";
+                option2Fields.style.display = "none";
+            } else if (dropdown.value === "image") {
+                // Show Option 2 input fields and hide Option 1 input fields
+                option1Fields.style.display = "none";
+                option2Fields.style.display = "block";
+            } else {
+                // Hide both input field containers if neither option is selected
+                option1Fields.style.display = "none";
+                option2Fields.style.display = "none";
+            }
+        });
+    </script>
+
+
+{{--    <!-- Generates Preview -->--}}
+    <script>
+        const linesArray = [];
+
+        // Initialize CKEditor
+        CKEDITOR.replace('kt_docs_ckeditor_classic');
+
+        // Function to remove HTML tags from a string
+        function removeHTMLTags(input) {
+            return input.replace(/<\/?[^>]+(>|$)/g, "");
+        }
+
+        // Function to update the preview based on the CKEditor content
+        function updatePreview() {
+
+            // Clear the linesArray
+            linesArray.length = 0;
+
+            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic; // Get the CKEditor instance
+            const separator = '।'; // Separator to split the text
+            const textareaValue = editor.getData(); // Get the content of the CKEditor textarea
+            const lines = textareaValue.split(separator); // Split the text into an array of lines
+
+            // Remove the last empty line if it exists
+            if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
+                lines.pop();
+            }
+
+            // Remove splitted text array last index
+            if(lines.length > 0) {
+                lines.pop();
+            }
+
+            // Create HTML to display the lines in the preview section
+            const totalLineCount = lines.length;
+
+            // Create HTML to display the lines in the preview section
+            const previewHTML = `<div class="mb-3"><strong>Total Line:</strong> ${totalLineCount}</div>` + lines.map(line => {
+                const trimmedLine = line.trim().concat('।');
+                const lineWithoutTags = removeHTMLTags(trimmedLine);
+                linesArray.push(lineWithoutTags);
+                return `
+                    <div class="row mt-7">
+                        <div class="col-12 col-md-10">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Line Bn</label>
+                            <input type="text" class="form-control form-control-solid" disabled value="${lineWithoutTags}" placeholder="Enter Line in Bangla"/>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('preview').innerHTML = previewHTML;
+            document.getElementById('lines_array').value = JSON.stringify(linesArray);
+
+        }
+
+
+        // Attach an event listener to the CKEditor instance's 'change' event
+        CKEDITOR.instances.kt_docs_ckeditor_classic.on('change', function() {
+            // Check if the CKEditor content is not empty before updating the preview
+            if (CKEDITOR.instances.kt_docs_ckeditor_classic.getData().trim() !== '') {
+                updatePreview();
+            } else {
+                // Clear the preview if CKEditor content is empty
+                document.getElementById('preview').innerHTML = '';
+            }
+        });
+
+
+        // Initial update of the preview
+        updatePreview();
+
+    </script>
+
+
+
 @endsection

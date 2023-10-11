@@ -33,9 +33,9 @@
                         </div>
                         <div id="kt_datatable_example_1_export" class="d-none"></div>
                     </div>
-{{--                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">--}}
-{{--                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalFormDataSave" class="btn btn-primary">Add New</a>--}}
-{{--                    </div>--}}
+                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                        <a href="{{ route('bangla.content') }}" class="btn btn-primary">Add New</a>
+                    </div>
                 </div>
                 <div class="card-body pt-0">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="">
