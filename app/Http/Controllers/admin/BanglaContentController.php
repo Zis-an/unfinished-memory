@@ -28,6 +28,8 @@ class BanglaContentController extends Controller
             try {
                 $bengali_lines = [];
 
+//                dd(json_decode(request('lines_array'), true));
+
                 foreach(json_decode(request('lines_array'), true) as $line)
                 {
                     array_push($bengali_lines, trim(html_entity_decode($line)));
@@ -47,7 +49,9 @@ class BanglaContentController extends Controller
                         $request->session()->flash('success', true);
                     }
                 }
+
                 return redirect()->route('bangla.content.show')->with('success','Content Added Successfully');
+
             } catch (\Throwable $th) {
                 return redirect()->back()->with('error', 'Something went wrong');
             }
