@@ -24,6 +24,7 @@ class BanglaContentController extends Controller
 
     public function store(Request $request)
     {
+
         if($request->type == "text") {
             try {
                 $bengali_lines = [];

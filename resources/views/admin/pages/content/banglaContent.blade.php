@@ -146,29 +146,23 @@
 
     <script>
         const linesArray = [];
-        // Initialize CKEditor
         CKEDITOR.replace('kt_docs_ckeditor_classic');
-        // Function to remove HTML tags from a string
         function removeHTMLTags(input) {
             return input.replace(/<\/?[^>]+(>|$)/g, "");
         }
         // Function to update the preview based on the CKEditor content
         function updatePreview() {
-            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic; // Get the CKEditor instance
-            const separator = '।'; // Separator to split the text
-            const textareaValue = editor.getData(); // Get the content of the CKEditor textarea
-            const lines = textareaValue.split(separator); // Split the text into an array of lines
-            // Remove the last empty line if it exists
+            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic;
+            const separator = '।';
+            const textareaValue = editor.getData();
+            const lines = textareaValue.split(separator);
             if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
                 lines.pop();
             }
-            // Remove splitted text array last index
             if(lines.length > 0) {
                 lines.pop();
             }
-            // Create HTML to display the lines in the preview section
             const totalLineCount = lines.length;
-            // Create HTML to display the lines in the preview section
             const previewHTML = `<div class="mb-3"><strong>Total Line:</strong> ${totalLineCount}</div>` + lines.map(line => {
                 const trimmedLine = line.trim().concat('।');
                 const lineWithoutTags = removeHTMLTags(trimmedLine);
@@ -186,18 +180,17 @@
             document.getElementById('lines_array').value = JSON.stringify(linesArray);
         }
 
-        // Attach an event listener to the CKEditor instance's 'change' event
+
         CKEDITOR.instances.kt_docs_ckeditor_classic.on('change', function() {
-            // Check if the CKEditor content is not empty before updating the preview
             if (CKEDITOR.instances.kt_docs_ckeditor_classic.getData().trim() !== '') {
                 updatePreview();
             } else {
-                // Clear the preview if CKEditor content is empty
                 document.getElementById('preview').innerHTML = '';
             }
         });
-        // Initial update of the preview
         updatePreview();
+
+
 
     </script>
 
