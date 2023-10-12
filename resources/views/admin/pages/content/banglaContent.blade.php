@@ -5,7 +5,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap lh-1">
-                <h1 class="d-flex align-items-center text-dark fw-bold my-1 fs-3">Bulk Text Input</h1>
+                <h1 class="d-flex align-items-center text-dark fw-bold my-1 fs-3">Book Content Text Input</h1>
                 <span class="h-20px border-gray-200 border-start mx-4"></span>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-1">
                     <li class="breadcrumb-item text-muted">
@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-300 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Bulk Text Input</li>
+                    <li class="breadcrumb-item text-muted">Book Content Text Input</li>
                 </ul>
             </div>
         </div>
@@ -27,7 +27,7 @@
                         @csrf
                         <div class="form-group mb-5">
                             <label for="type" class="required fs-6 fw-semibold mb-2">Type</label>
-                            <select name="type" id="type" class="form-select form-select-solid">
+                            <select name="type" id="type" class="form-select form-select-solid" required>
                                 <option value="">Select Type</option>
                                 <option value="text">Text</option>
                                 <option value="image">Image</option>
@@ -58,7 +58,7 @@
                             <br>
                             <!-- Add a preview section -->
                             <div class="d-flex row">
-                                <div class="col-6 mt-3">
+                                <div class="col-12 mt-3">
                                     <div class="">
                                         <div id="preview"></div>
                                     </div>
@@ -172,6 +172,7 @@
 
 
 {{--    <!-- Generates Preview -->--}}
+
     <script>
         const linesArray = [];
 
@@ -214,11 +215,29 @@
                 linesArray.push(lineWithoutTags);
                 return `
                     <div class="row mt-7">
-                        <div class="col-12 col-md-10">
+                        <div class="col-12 col-md-8">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Line Bn</label>
                             <input type="text" class="form-control form-control-solid" disabled value="${lineWithoutTags}" placeholder="Enter Line in Bangla"/>
                         </div>
+                        <div class="col-12 col-md-4">
+                            <div class="row">
+                            <div class="col-6">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Start Time</label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="00:00" name="start_time[]" />
+                                </div>
+                                <div class="col-6">
+                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">End Time</label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="00:00" name="end_time[]" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
+
+
+
+
                 `;
             }).join('');
 

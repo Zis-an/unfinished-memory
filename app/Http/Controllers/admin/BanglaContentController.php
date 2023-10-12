@@ -25,6 +25,7 @@ class BanglaContentController extends Controller
     public function store(Request $request)
     {
 
+
         if($request->type == "text") {
             try {
                 $bengali_lines = [];
@@ -38,6 +39,7 @@ class BanglaContentController extends Controller
 
                 if(count($bengali_lines) != 0)
                 {
+
                     for($i=0; $i<count($bengali_lines); $i++)
                     {
                         $content = new BanglaContent();
@@ -45,6 +47,11 @@ class BanglaContentController extends Controller
                         $content->book_id = $request->book_id;
                         $content->chapter_id = $request->chapter_id;
                         $content->line = $bengali_lines[$i];
+
+
+                        $content->start_time =  $request->start_time[$i];
+                        $content->end_time =  $request->end_time[$i];
+
                         $content->page_no = $request->page_no;
                         $content->save();
                         $request->session()->flash('success', true);
@@ -96,6 +103,8 @@ class BanglaContentController extends Controller
             $banglaContent->book_id = $request->book_id;
             $banglaContent->chapter_id = $request->chapter_id;
             $banglaContent->line = $request->line;
+            $banglaContent->start_time = $request->start_time;
+            $banglaContent->end_time = $request->end_time;
             if($request->hasFile('image_file'))
             {
                 $imagePath = $request->file('image_file')->store('public/images');

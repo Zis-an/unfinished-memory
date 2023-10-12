@@ -25,6 +25,8 @@ class BanglaContentController extends Controller
                         'id' => $content->id,
                         'line' => $content->line,
                         'type' => $content->type,
+                        'startTime' => $content->start_time,
+                        'endTime' => $content->end_time,
                         'image' => $content->image_file,
                     ];
                 });
@@ -60,7 +62,6 @@ class BanglaContentController extends Controller
                 'audio_files' => $audioFilesAssoc,
             ]);
         } catch (\Exception $e) {
-            // Handle the exception here
             return response()->json(['message' => 'An error occurred.'], 500);
         }
     }

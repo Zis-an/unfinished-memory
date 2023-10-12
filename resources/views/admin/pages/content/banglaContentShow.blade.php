@@ -47,6 +47,8 @@
                             <th>Book Name</th>
                             <th>Chapter Name</th>
                             <th>Line</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Page No</th>
                             <th>Image</th>
                             <th>Actions</th>
@@ -60,7 +62,10 @@
                                 <td>{{ $contentBangla->chapter->book->name_bn }}</td>
                                 <td>{{ $contentBangla->chapter->chapter_name_bn }}</td>
                                 <td>{{ $contentBangla->line? (Illuminate\Support\Str::limit($contentBangla->line, 10)):'N/A' }}</td>
+                                <td>{{ $contentBangla->start_time ? $contentBangla->start_time:'N/A' }}</td>
+                                <td>{{ $contentBangla->end_time ? $contentBangla->end_time:'N/A' }}</td>
                                 <td>{{ $contentBangla->page_no }}</td>
+
                                 <td>
                                     @if($contentBangla->image_file !=null)
                                     <img src="{{asset('storage/'.$contentBangla->image_file)}}" style="height: 100px; width: 100px;">
@@ -113,6 +118,16 @@
                                                 <div class="col-md-12 fv-row">
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Line</label>
                                                     <input type="text" name="line" class="form-control form-control-solid" value="{{ $contentBangla->line }}" placeholder="Enter Line "/>
+                                                </div>
+
+                                                <div class="col-md-12 fv-row">
+                                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Start Time</label>
+                                                    <input type="text" name="line" class="form-control form-control-solid" value="{{ $contentBangla->start_time }}" placeholder="Enter Start Time "/>
+                                                </div>
+
+                                                <div class="col-md-12 fv-row">
+                                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">End Time</label>
+                                                    <input type="text" name="line" class="form-control form-control-solid" value="{{ $contentBangla->end_time }}" placeholder="Enter End Time "/>
                                                 </div>
 
                                                 <div class="">

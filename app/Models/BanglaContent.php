@@ -15,7 +15,8 @@ class BanglaContent extends Model
         'chapter_id',
         'line',
         'page_no',
-        'audio_file',
+        'start_time',
+        'end_time',
         'image_file'
     ];
 

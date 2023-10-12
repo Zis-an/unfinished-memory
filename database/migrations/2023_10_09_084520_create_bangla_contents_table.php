@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('line')->nullable();
             $table->integer('page_no')->nullable();
-            $table->string('audio_file')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->string('image_file')->nullable();
             $table->timestamps();
         });
