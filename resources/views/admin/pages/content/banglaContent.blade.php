@@ -1,7 +1,6 @@
 @extends('admin.app')
 @section('admin_content')
-    @include('sweetalert::alert')
-
+@include('sweetalert::alert')
     <div class="toolbar" id="kt_toolbar">
         <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
             <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center me-3 flex-wrap lh-1">
@@ -118,9 +117,7 @@
             'success'
         )
         @endif
-
     </script>
-
     <!-- Chapter & Book -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -145,7 +142,6 @@
             });
         });
     </script>
-
     <!-- Select Type Image or Text -->
     <script>
         // Get references to the select element and input field containers
@@ -170,44 +166,33 @@
         });
     </script>
 
-
-{{--    <!-- Generates Preview -->--}}
-
+    {{--Generates Preview--}}
     <script>
         const linesArray = [];
-
         // Initialize CKEditor
         CKEDITOR.replace('kt_docs_ckeditor_classic');
-
         // Function to remove HTML tags from a string
         function removeHTMLTags(input) {
             return input.replace(/<\/?[^>]+(>|$)/g, "");
         }
-
         // Function to update the preview based on the CKEditor content
         function updatePreview() {
-
             // Clear the linesArray
             linesArray.length = 0;
-
             const editor = CKEDITOR.instances.kt_docs_ckeditor_classic; // Get the CKEditor instance
             const separator = '।'; // Separator to split the text
             const textareaValue = editor.getData(); // Get the content of the CKEditor textarea
             const lines = textareaValue.split(separator); // Split the text into an array of lines
-
             // Remove the last empty line if it exists
             if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
                 lines.pop();
             }
-
             // Remove splitted text array last index
             if(lines.length > 0) {
                 lines.pop();
             }
-
             // Create HTML to display the lines in the preview section
             const totalLineCount = lines.length;
-
             // Create HTML to display the lines in the preview section
             const previewHTML = `<div class="mb-3"><strong>Total Line:</strong> ${totalLineCount}</div>` + lines.map(line => {
                 const trimmedLine = line.trim().concat('।');
@@ -219,34 +204,12 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Line Bn</label>
                             <input type="text" class="form-control form-control-solid" disabled value="${lineWithoutTags}" placeholder="Enter Line in Bangla"/>
                         </div>
-                        <div class="col-12 col-md-4">
-                            <div class="row">
-                            <div class="col-6">
-                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">Start Time</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="00:00" name="start_time[]" />
-                                </div>
-                                <div class="col-6">
-                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">End Time</label>
-                                    <input type="text" class="form-control form-control-solid" placeholder="00:00" name="end_time[]" />
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-
-
-
-
-
                 `;
             }).join('');
-
             document.getElementById('preview').innerHTML = previewHTML;
             document.getElementById('lines_array').value = JSON.stringify(linesArray);
-
         }
-
-
         // Attach an event listener to the CKEditor instance's 'change' event
         CKEDITOR.instances.kt_docs_ckeditor_classic.on('change', function() {
             // Check if the CKEditor content is not empty before updating the preview
@@ -257,13 +220,7 @@
                 document.getElementById('preview').innerHTML = '';
             }
         });
-
-
         // Initial update of the preview
         updatePreview();
-
     </script>
-
-
-
 @endsection
