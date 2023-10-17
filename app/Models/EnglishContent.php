@@ -16,10 +16,13 @@ class EnglishContent extends Model
         'chapter_id',
         'line',
         'page_no',
-        'audio_file',
         'image_file'
     ];
 
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
     public function chapter()
     {
         return $this->belongsTo(Chapter::class, 'chapter_id');

@@ -24,6 +24,7 @@ class BookController extends Controller
             ]);
             $book = new Book();
             $book->name = $request->name;
+            $book->language = $request->language;
             $book->save();
             $request->session()->flash('success', true);
             return redirect()->back();

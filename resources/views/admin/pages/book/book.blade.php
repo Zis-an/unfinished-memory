@@ -41,6 +41,7 @@
                         <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>S/N</th>
+                            <th>Language</th>
                             <th>Book Name</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -50,6 +51,7 @@
                         @foreach($books as $key=>$data)
                             <tr>
                                 <td>{{$key+1}}</td>
+                                <td>{{$data->language}}</td>
                                 <td>{{$data->name}}</td>
                                 <td>
                                     @if($data->status==1)
@@ -157,6 +159,15 @@
                         @csrf
                         <div class="mb-13 text-center">
                             <h1 class="mb-3">Add Book</h1>
+                        </div>
+
+                        <div class="col-md-12 fv-row">
+                            <label class="required fs-6 fw-semibold mb-2">Language</label>
+                            <select name="language" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select Book" required>
+                                <option value="">Select Language</option>
+                                <option value="bangla">Bangla</option>
+                                <option value="english">English</option>
+                            </select>
                         </div>
                         <div class="row g-9 mb-8">
                             <div class="col-md-12 fv-row">

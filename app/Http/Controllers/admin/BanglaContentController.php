@@ -15,7 +15,7 @@ class BanglaContentController extends Controller
 {
     public function index()
     {
-        $books = Book::latest()->get();
+        $books = Book::where('language','=','bangla')->get();
         $chapters = Chapter::latest()->get();
         $banglaContent = BanglaContent::latest()->first();
         $pageNo = $banglaContent? $banglaContent->page_no : 0;
@@ -66,7 +66,7 @@ class BanglaContentController extends Controller
 
     public function banglaContentShowAll(Request $request)
     {
-        $books = Book::latest()->get();
+        $books = Book::where('language','=','bangla')->get();
         $chapters = Chapter::get();
         $bookId = $request->input('book_id');
         $chapterId = $request->input('chapter_id');

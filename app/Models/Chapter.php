@@ -21,4 +21,15 @@ class Chapter extends Model
         return $this->belongsTo(Book::class, 'book_id');
     }
 
+    public function contentsBangla()
+    {
+        return $this->hasMany(BanglaContent::class);
+    }
+
+
+    public function contentsEnglish()
+    {
+        return $this->hasMany(EnglishContent::class);
+    }
+
 }

@@ -103,18 +103,39 @@
                                 </div>
                             </div>
 
-
-
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{route('bangla.contents.show.all')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Bangla Content</span>
+                                        <span class="menu-title">Show Bangla Content</span>
                                     </a>
                                 </div>
                             </div>
+
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{route('english.content')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Add English Content</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{route('english.contents.show.all')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Show English Content</span>
+                                    </a>
+                                </div>
+                            </div>
+
 
 
 

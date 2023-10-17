@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\BanglaContentController;
 use App\Http\Controllers\admin\BookController;
 use App\Http\Controllers\admin\ChapterController;
 
+use App\Http\Controllers\admin\EnglishContentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,9 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/chapter/delete/{id}',[ChapterController::class, 'destroy'])->name('chapter.delete');
 
     //Bangla Content Store
-    //Route::get('/bangla-content-show', [BanglaContentController::class, 'show'])->name('bangla.content.show');
     Route::get('/bangla-content', [BanglaContentController::class, 'index'])->name('bangla.content');
     Route::post('/bangla-content-store', [BanglaContentController::class, 'store'])->name('bangla.content.store');
+
+    Route::get('/english-content', [EnglishContentController::class, 'index'])->name('english.content');
+    Route::post('/english-content-store', [EnglishContentController::class, 'store'])->name('english.content.store');
 
     //Bangla Content Show & Update
     Route::match(['get', 'post'], 'bangla-contents-show-all', [BanglaContentController::class, 'banglaContentShowAll'])->name('bangla.contents.show.all');
@@ -48,6 +51,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-duration/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'editDuration'])->name('edit.duration');
     Route::put('/update-content', [BanglaContentController::class, 'updatePageContent'])->name('update.content');
     Route::put('/update-duration', [BanglaContentController::class, 'updatePageDuration'])->name('update.duration');
+
+
+    //English Content Show & Update
+    Route::match(['get', 'post'], 'english-contents-show-all', [EnglishContentController::class, 'englishContentShowAll'])->name('english.contents.show.all');
+    Route::get('/view-content-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'viewPageEnglish'])->name('view.content.english');
+    Route::get('/edit-content-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'editPageEnglish'])->name('edit.content.english');
+    Route::get('/edit-duration-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'editDurationEnglish'])->name('edit.duration.english');
+    Route::put('/update-content-english', [EnglishContentController::class, 'updateEnglishPageContent'])->name('update.content.english');
+    Route::put('/update-duration-english', [EnglishContentController::class, 'updateEnglishPageDuration'])->name('update.duration.english');
 
 });
 require __DIR__.'/auth.php';

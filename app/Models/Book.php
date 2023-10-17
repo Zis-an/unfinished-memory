@@ -14,6 +14,12 @@ class Book extends Model
 
     protected $fillable = [
         'name',
+        'language',
         'status',
     ];
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 }
