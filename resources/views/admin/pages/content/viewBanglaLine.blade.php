@@ -51,8 +51,8 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $contentBangla->type }}</td>
-                                <td>{{ $contentBangla->chapter->book->name_bn }}</td>
-                                <td>{{ $contentBangla->chapter->chapter_name_bn }}</td>
+                                <td>{{ $contentBangla->book->name }}</td>
+                                <td>{{ $contentBangla->chapter->chapter_name }}</td>
                                 <td>{{ $contentBangla->line }}</td>
                                 <td>{{ $contentBangla->start_time ? $contentBangla->start_time:'N/A' }}</td>
                                 <td>{{ $contentBangla->end_time ? $contentBangla->end_time:'N/A' }}</td>

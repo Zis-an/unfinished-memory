@@ -25,7 +25,7 @@
             <div class="card card-flush">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <div class="card-title">
-                        <div id="kt_datatable_example_1_export">Line Update</div>
+                        <div id="kt_datatable_example_1_export">Line Update({{$totalLineCount}})</div>
                     </div>
                 </div>
 

@@ -37,7 +37,7 @@
                             <select name="book_id" id="book_for_chapters" class="form-select form-select-solid" required>
                                 <option value="">Select Book</option>
                                 @foreach ($books as $book)
-                                    <option value="{{ $book->id }}">{{ $book->name_bn }}</option>
+                                    <option value="{{ $book->id }}">{{ $book->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -134,7 +134,7 @@
                 filteredChapters.forEach(chapter => {
                     const option = document.createElement('option');
                     option.value = chapter.id;
-                    option.textContent = chapter.chapter_name_bn;
+                    option.textContent = chapter.chapter_name;
                     chapterSelect.appendChild(option);
                 });
                 // Enable or disable the chapter dropdown
@@ -176,13 +176,15 @@
             return input.replace(/<\/?[^>]+(>|$)/g, "");
         }
         // Function to update the preview based on the CKEditor content
+
         function updatePreview() {
             // Clear the linesArray
             linesArray.length = 0;
-            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic; // Get the CKEditor instance
-            const separator = '।'; // Separator to split the text
-            const textareaValue = editor.getData(); // Get the content of the CKEditor textarea
-            const lines = textareaValue.split(separator); // Split the text into an array of lines
+            const editor = CKEDITOR.instances.kt_docs_ckeditor_classic;
+
+            const separator = '।';
+            const textareaValue = editor.getData();
+            const lines = textareaValue.split(separator);
             // Remove the last empty line if it exists
             if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
                 lines.pop();

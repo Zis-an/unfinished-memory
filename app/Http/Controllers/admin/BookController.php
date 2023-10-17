@@ -20,13 +20,10 @@ class BookController extends Controller
     {
         try {
             $request->validate([
-                'name_en' => 'required|max:255',
-                'name_bn' => 'required|max:255',
+                'name' => 'required|max:255',
             ]);
             $book = new Book();
-            $book->name_en = $request->name_en;
-            $book->name_bn = $request->name_bn;
-            $book->total_pages = $request->total_pages;
+            $book->name = $request->name;
             $book->save();
             $request->session()->flash('success', true);
             return redirect()->back();
@@ -40,16 +37,13 @@ class BookController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name_en' => 'required|max:255',
-                'name_bn' => 'required|max:255',
+                'name' => 'required|max:255',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $book = Book::findOrFail($id);
-            $book->name_en = $request->input('name_en');
-            $book->name_bn = $request->input('name_bn');
-            $book->total_pages = $request->input('total_pages');
+            $book->name = $request->input('name');
             $book->status = $request->input('status');
             $book->save();
             Alert::success('Success', 'Book information updated successfully');

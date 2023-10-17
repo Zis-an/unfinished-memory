@@ -27,7 +27,7 @@
             <div class="card card-flush">
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <div class="card-title">
-                        <div id="kt_datatable_example_1_export">Duration</div>
+                        <div id="kt_datatable_example_1_export">Duration({{$totalLineCount}})</div>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -38,31 +38,56 @@
                                 @method('PUT')
                                 <input type="hidden" name="id[]" value="{{$contentBangla->id}}">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="d-flex align-items-center fs-6 fw-semibold required">Line</label>
                                         <textarea disabled class="form-control form-control-solid" rows="2" name="line[]" placeholder="Type Target Details">{{ $contentBangla->line }}</textarea>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="row">
                                             <div class="col-md-6 fv-row">
                                                 <label class="d-flex align-items-center fs-6 fw-semibold required">Start Time</label>
-                                                <input type="text" name="start_time[]" class="form-control form-control-solid" value="{{ $contentBangla->start_time }}" placeholder="Enter Start Time "/>
+                                                <input type="text" name="start_time[]" class="form-control form-control-solid" value="{{ $contentBangla->start_time }}"  placeholder="00:00"/>
                                             </div>
                                             <div class="col-md-6 fv-row">
                                                 <label class="d-flex align-items-center fs-6 fw-semibold required">End Time</label>
-                                                <input type="text" name="end_time[]" class="form-control form-control-solid" value="{{ $contentBangla->end_time }}" placeholder="Enter End Time "/>
+                                                <input type="text" name="end_time[]" class="form-control form-control-solid" value="{{ $contentBangla->end_time }}"  placeholder="00:00"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label class="d-flex align-items-center justify-content-center fs-6 fw-semibold">Status</label>
+                                                <div class="d-flex align-items-center justify-content-center h-50">
+                                                    @if( $contentBangla->start_time !=null && $contentBangla->end_time !=null)
+                                                    <i class="fa-solid fa-check text-success"></i>
+                                                    @else
+                                                    <i class="fa-solid fa-xmark text-danger"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="text-end  d-block" style="margin-top: 20px;">
+                                                    <button type="submit" class="btn btn-primary w-100">
+                                                        <span class="indicator-label">Update</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
+
+
+
+
                     @endforeach
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">
-                            <span class="indicator-label">Update</span>
-                        </button>
-                    </div>
+{{--                    <div class="text-end">--}}
+{{--                        <button type="submit" class="btn btn-primary">--}}
+{{--                            <span class="indicator-label">Update</span>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
 
                     </form>
 

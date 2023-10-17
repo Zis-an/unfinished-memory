@@ -41,9 +41,7 @@
                         <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>S/N</th>
-                            <th>Book Name(Bn)</th>
-                            <th>Book Name(En)</th>
-                            <th>Total Pages</th>
+                            <th>Book Name</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -52,9 +50,7 @@
                         @foreach($books as $key=>$data)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$data->name_bn}}</td>
-                                <td>{{$data->name_en}}</td>
-                                <td>{{$data->total_pages}}</td>
+                                <td>{{$data->name}}</td>
                                 <td>
                                     @if($data->status==1)
                                         <div class="badge badge-light-success">Published</div>
@@ -87,17 +83,7 @@
                                                 <div class="row g-9 mb-8">
                                                     <div class="col-md-12 fv-row">
                                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name Bn</label>
-                                                        <input type="text" name="name_bn" class="form-control form-control-solid"  value="{{$data->name_bn}}" placeholder="Enter Book Name Bangle"/>
-                                                    </div>
-
-                                                    <div class="col-md-12 fv-row">
-                                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name En</label>
-                                                        <input type="text" name="name_en" class="form-control form-control-solid"  value="{{$data->name_en}}" placeholder="Enter Book Name English"/>
-                                                    </div>
-
-                                                    <div class="col-md-12 fv-row">
-                                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Total Pages</label>
-                                                        <input type="text" name="total_pages" class="form-control form-control-solid"  value="{{$data->total_pages}}" placeholder="Enter Book Total Pages"/>
+                                                        <input type="text" name="name" class="form-control form-control-solid"  value="{{$data->name}}" placeholder="Enter Book Name Bangle"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 fv-row">
@@ -174,18 +160,8 @@
                         </div>
                         <div class="row g-9 mb-8">
                             <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name Bn</label>
-                                <input type="text" name="name_bn" class="form-control form-control-solid" placeholder="Enter Book Name Bangle"/>
-                            </div>
-
-                            <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name En</label>
-                                <input type="text" name="name_en" class="form-control form-control-solid" placeholder="Enter Book Name English"/>
-                            </div>
-
-                            <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Total Pages</label>
-                                <input type="text" name="total_pages" class="form-control form-control-solid" placeholder="Enter Book Total Pages"/>
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name</label>
+                                <input type="text" name="name" class="form-control form-control-solid" placeholder="Enter Book Name"/>
                             </div>
                         </div>
                         <div class="text-end">

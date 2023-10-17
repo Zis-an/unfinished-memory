@@ -41,11 +41,8 @@
                         <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th>S/N</th>
-                            <th>Book Name(Bn)</th>
-                            <th>Book Name(En)</th>
-                            <th>Chapter Name(Bn)</th>
-                            <th>Chapter Name(En)</th>
-                            <th>Pages</th>
+                            <th>Book Name</th>
+                            <th>Chapter Name</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -54,11 +51,8 @@
                         @foreach($chapters as $key=>$data)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$data->book?$data->book->name_bn:'N/A'}}</td>
-                                <td>{{$data->book?$data->book->name_en:'N/A'}}</td>
-                                <td>{{$data->chapter_name_bn}}</td>
-                                <td>{{$data->chapter_name_en}}</td>
-                                <td>{{$data->total_pages}}</td>
+                                <td>{{$data->book?$data->book->name:'N/A'}}</td>
+                                <td>{{$data->chapter_name}}</td>
                                 <td>
                                     @if($data->status==1)
                                         <div class="badge badge-light-success">Published</div>
@@ -93,9 +87,9 @@
                                                 <div class="col-md-12 mb-8 fv-row">
                                                     <label class="required fs-6 fw-semibold mb-2">Book</label>
                                                     <select name="book_id" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select Book" >
-                                                        <option selected value="{{$data->book_id}}">{{$data->book->name_bn}}</option>
+                                                        <option selected value="{{$data->book_id}}">{{$data->book->name}}</option>
                                                         @foreach($books as $booksData)
-                                                            <option value="{{$booksData->id}}">{{$booksData->name_bn}}</option>
+                                                            <option value="{{$booksData->id}}">{{$booksData->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -105,19 +99,9 @@
                                                 <div class="row g-9 mb-8">
                                                     <div class="col-md-12 fv-row">
                                                         <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name Bn</label>
-                                                        <input type="text" name="chapter_name_bn" class="form-control form-control-solid"  value="{{$data->chapter_name_bn}}" placeholder="Enter Chapter Name Bangle"/>
+                                                        <input type="text" name="chapter_name" class="form-control form-control-solid"  value="{{$data->chapter_name}}" placeholder="Enter Chapter Name"/>
                                                     </div>
 
-                                                    <div class="col-md-12 fv-row">
-                                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name En</label>
-                                                        <input type="text" name="chapter_name_en" class="form-control form-control-solid"  value="{{$data->chapter_name_en}}" placeholder="Enter Chapter Name English"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 fv-row">
-                                                    <div class="col-md-12 fv-row">
-                                                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Total Pages</label>
-                                                        <input type="text" name="total_pages" class="form-control form-control-solid"  value="{{$data->total_pages}}" placeholder="Enter Book Total Pages"/>
-                                                    </div>
                                                     <label class="d-flex align-items-center fs-6 fw-semibold mb-6 required">Status</label>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check me-5">
@@ -197,27 +181,15 @@
                                 <select name="book_id" class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Select Book" >
                                     <option value="">Select Book</option>
                                     @foreach($books as $booksData)
-                                        <option value="{{$booksData->id}}">{{$booksData->name_bn}}</option>
+                                        <option value="{{$booksData->id}}">{{$booksData->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name Bn</label>
-                                <input type="text" name="chapter_name_bn" class="form-control form-control-solid" placeholder="Enter Chapter Name Bangle"/>
+                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name</label>
+                                <input type="text" name="chapter_name" class="form-control form-control-solid" placeholder="Enter Chapter Name"/>
                             </div>
-
-                            <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Name En</label>
-                                <input type="text" name="chapter_name_en" class="form-control form-control-solid" placeholder="Enter Chapter Name English"/>
-                            </div>
-
-                            <div class="col-md-12 fv-row">
-                                <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Total Pages</label>
-                                <input type="text" name="total_pages" class="form-control form-control-solid" placeholder="Enter Book Total Pages"/>
-                            </div>
-
-
                         </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">

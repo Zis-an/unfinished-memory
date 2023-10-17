@@ -48,5 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-duration/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'editDuration'])->name('edit.duration');
     Route::put('/update-content', [BanglaContentController::class, 'updatePageContent'])->name('update.content');
     Route::put('/update-duration', [BanglaContentController::class, 'updatePageDuration'])->name('update.duration');
+
 });
 require __DIR__.'/auth.php';

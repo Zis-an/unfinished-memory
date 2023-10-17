@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->integer('book_id');
-            $table->string('chapter_name_bn');
-            $table->string('chapter_name_en');
+            $table->string('chapter_name')->nullable();
             $table->integer('total_pages')->nullable();
             $table->boolean('status')->default(1);
             $table->softDeletes();

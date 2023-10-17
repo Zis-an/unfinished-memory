@@ -13,9 +13,7 @@ class Book extends Model
     use SoftDeletes, HasFactory;
 
     protected $fillable = [
-        'name_bn',
-        'name_en',
-        'total_pages',
+        'name',
         'status',
     ];
 }

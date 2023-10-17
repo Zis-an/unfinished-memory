@@ -34,7 +34,7 @@
                                             <select name="book_id" id="book_for_chapters" class="form-select form-select-solid" required>
                                                 <option value="">Select Book</option>
                                                 @foreach ($books as $book)
-                                                    <option value="{{ $book->id }}">{{ $book->name_bn }}</option>
+                                                    <option value="{{ $book->id }}">{{ $book->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -105,7 +105,7 @@
                 filteredChapters.forEach(chapter => {
                     const option = document.createElement('option');
                     option.value = chapter.id;
-                    option.textContent = chapter.chapter_name_bn;
+                    option.textContent = chapter.chapter_name;
                     chapterSelect.appendChild(option);
                 });
                 // Enable or disable the chapter dropdown

@@ -19,7 +19,10 @@ class BanglaContent extends Model
         'end_time',
         'image_file'
     ];
-
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'book_id');
+    }
     public function chapter()
     {
         return $this->belongsTo(Chapter::class, 'chapter_id');

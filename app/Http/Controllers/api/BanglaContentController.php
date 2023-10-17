@@ -17,7 +17,6 @@ class BanglaContentController extends Controller
         $chapter = Chapter::find($firstContent->chapter_id);
         $book = Book::find($chapter->book_id);
         $audioPath = public_path("bookBangla/page_{$pageNo}/");
-
         try {
             if (!file_exists($audioPath)) {
                 $contentData = $contents->map(function ($content) {
@@ -36,6 +35,8 @@ class BanglaContentController extends Controller
                     'chapter' => $chapter,
                     'lines' => $contentData,
                     'audio_files' => null,
+                    'pageNo' => $pageNo,
+                    'totalPage' => 50,
                 ]);
             }
 
@@ -60,6 +61,10 @@ class BanglaContentController extends Controller
                 'chapter' => $chapter,
                 'lines' => $contentData,
                 'audio_files' => $audioFilesAssoc,
+                'pageNo' => $pageNo,
+                'totalPage' => 50,
+
+
             ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred.'], 500);

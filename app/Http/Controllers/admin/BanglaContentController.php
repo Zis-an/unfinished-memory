@@ -64,18 +64,10 @@ class BanglaContentController extends Controller
         }
     }
 
-//    public function show()
-//    {
-//        $books = Book::latest()->get();
-//        $chapters = Chapter::latest()->get();
-//        $contents = BanglaContent::with('chapter')->latest()->get();
-//        return view('admin.pages.content.banglaContentShow', compact('books', 'chapters', 'contents'));
-//    }
-
     public function banglaContentShowAll(Request $request)
     {
         $books = Book::latest()->get();
-        $chapters = Chapter::latest()->get();
+        $chapters = Chapter::get();
         $bookId = $request->input('book_id');
         $chapterId = $request->input('chapter_id');
         $query = BanglaContent::where('book_id', $bookId)->where('chapter_id', $chapterId);
@@ -96,6 +88,7 @@ class BanglaContentController extends Controller
         $contents = BanglaContent::where('book_id', $bookId)
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
+            ->with('book','chapter')
             ->get();
         return view('admin.pages.content.viewBanglaLine', compact('contents', 'books', 'chapters'));
     }
@@ -108,7 +101,8 @@ class BanglaContentController extends Controller
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
             ->get();
-        return view('admin.pages.content.editBanglaLine', compact('contents', 'books', 'chapters'));
+        $totalLineCount = $contents->count();
+        return view('admin.pages.content.editBanglaLine', compact('contents', 'books', 'chapters','totalLineCount'));
     }
 
     public function editDuration($bookId, $chapterId, $pageNo)
@@ -119,7 +113,8 @@ class BanglaContentController extends Controller
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
             ->get();
-        return view('admin.pages.content.editLineDuration', compact('contents', 'books', 'chapters'));
+        $totalLineCount = $contents->count();
+        return view('admin.pages.content.editLineDuration', compact('contents', 'books', 'chapters','totalLineCount'));
     }
 
 
@@ -128,11 +123,8 @@ class BanglaContentController extends Controller
         $lineIds = $request->input('id');
         $lines = $request->input('line');
         foreach ($lineIds as $key => $lineId) {
-            // Assuming you have a model for your content, retrieve the content by ID
             $content = BanglaContent::find($lineId);
-            // Update the content with the new data
             $content->line = $lines[$key];
-            // Save the updated content
             $content->save();
         }
         return redirect()->back()->with('success', 'Lines updated successfully');
@@ -145,12 +137,13 @@ class BanglaContentController extends Controller
         $endTimes = $request->input('end_time');
         foreach ($lineIds as $key => $lineId) {
             $content = BanglaContent::find($lineId);
-            // Update the content with the new data
             $content->start_time = $startTimes[$key];
             $content->end_time = $endTimes[$key];
             $content->save();
         }
         return redirect()->back()->with('success', 'Lines updated successfully');
     }
+
+
 
 }
