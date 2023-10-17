@@ -83,6 +83,8 @@ class BanglaContentController extends Controller
                 'id' => $content->id,
                 'line' => $content->line,
                 'type' => $content->type,
+                'startTime' => $content->start_time,
+                'endTime' => $content->end_time,
                 'image' => $content->image_file,
             ];
         });
@@ -103,18 +105,78 @@ class BanglaContentController extends Controller
 
     public function chapters(Book $book)
     {
-        $chapters = $book->chapters;
+        $chapters = $book->chapters->map(function ($chapter) use ($book) {
+            $pageCount = BanglaContent::where('book_id', $book->id)
+                ->where('chapter_id', $chapter->id)
+                ->distinct('page_no')
+                ->count('page_no');
+
+            $chapter->page_count = $pageCount;
+
+            return $chapter;
+        });
+
         return response()->json($chapters);
     }
+//    public function content(Book $book, Chapter $chapter)
+//    {
+//        try {
+//            $bookId = $book->id;
+//            $chapterId = $chapter->id;
+//            $pageNo = request()->input('page_no');
+//
+//            if ($bookId !== null && $chapterId !== null && $pageNo !== null) {
+//                $contents = BanglaContent::where('book_id', $bookId)
+//                    ->where('chapter_id', $chapterId)
+//                    ->where('page_no', $pageNo)
+//                    ->get();
+//
+//                if ($contents->isEmpty()) {
+//                    return response()->json(['message' => 'No content found.']);
+//                }
+//
+//                return response()->json($contents);
+//            } else {
+//                return response()->json(['message' => 'Invalid input. Please provide valid book, chapter, and page number.']);
+//            }
+//        } catch (Exception $e) {
+//            return response()->json(['message' => 'An error occurred.']);
+//        }
+//    }
+
     public function content(Book $book, Chapter $chapter)
     {
-        $pageNo = request()->input('page_no');
-        $contents = BanglaContent::where('book_id', $book->id)
-            ->where('chapter_id', $chapter->id)
-            ->where('page_no', $pageNo)
-            ->get();
-        return response()->json($contents);
+
+        try {
+            $bookId = $book->id;
+            $chapterId = $chapter->id;
+            $pageNo = request()->input('page_no');
+            if ($bookId !== null && $chapterId !== null && $pageNo !== null) {
+                $contents = BanglaContent::where([
+                    'book_id' => $bookId,
+                    'chapter_id' => $chapterId,
+                    'page_no' => $pageNo,
+                ])->get();
+
+                $totalLineCount = $contents->count();
+                if ($contents->isEmpty()) {
+                    return response()->json(['message' => 'No content found.']);
+                }
+                return response()->json([
+                    'total_lines' => $totalLineCount,
+                    'contents' => $contents
+
+                ]);
+            }
+            return response()->json(['message' => 'Invalid input. Please provide valid book, chapter, and page number.']);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'An error occurred.']);
+        }
     }
+
+
+
+
 
 
 //    public function content(Book $book, Chapter $chapter)

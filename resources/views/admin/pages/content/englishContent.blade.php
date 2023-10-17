@@ -197,7 +197,7 @@
             const totalLineCount = lines.length;
             // Create HTML to display the lines in the preview section
             const previewHTML = `<div class="mb-3"><strong>Total Line:</strong> ${totalLineCount}</div>` + lines.map(line => {
-                const trimmedLine = line.trim().concat('।');
+                const trimmedLine = line.trim().concat('.');
                 const lineWithoutTags = removeHTMLTags(trimmedLine);
                 linesArray.push(lineWithoutTags);
                 return `

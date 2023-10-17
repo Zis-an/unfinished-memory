@@ -68,7 +68,7 @@ class BanglaContentController extends Controller
     {
         $books = Book::where('language','=','bangla')->get();
         $chapters = Chapter::get();
-        $bookId = $request->input('book_id');
+        $bookId = $request->input('book_id',);
         $chapterId = $request->input('chapter_id');
         $query = BanglaContent::where('book_id', $bookId)->where('chapter_id', $chapterId);
         if (!empty($search)) {
