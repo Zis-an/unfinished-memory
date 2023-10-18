@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\EnglishContent;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,8 +16,8 @@ class AdminController extends Controller
         //Total Book
         $totalBook = Book::count();
         $totalChapter = Chapter::count();
-        $totalImage = 10;
-        $totalLine = 60;
-        return view('admin.dashboard',compact('totalBook', 'totalChapter', 'totalImage', 'totalLine'));
+        $totalBanglaLine = BanglaContent::Where('type', '=','text')->count('line');
+        $totalEnglishLine = EnglishContent::Where('type', '=','text')->count('line');
+        return view('admin.dashboard',compact('totalBook', 'totalChapter', 'totalBanglaLine', 'totalEnglishLine'));
     }
 }

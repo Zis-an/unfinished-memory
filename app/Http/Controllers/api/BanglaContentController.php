@@ -103,21 +103,47 @@ class BanglaContentController extends Controller
         return response()->json($books);
     }
 
+//    public function chapters(Book $book)
+//    {
+//        $chapters = $book->chapters->map(function ($chapter) use ($book) {
+//            $pageCount = BanglaContent::where('book_id', $book->id)
+//                ->where('chapter_id', $chapter->id)
+//                ->distinct('page_no')
+//                ->count('page_no');
+//
+//            $chapter->page_count = $pageCount;
+//
+//            return $chapter;
+//        });
+//
+//        return response()->json($chapters);
+//    }
+
+
     public function chapters(Book $book)
     {
-        $chapters = $book->chapters->map(function ($chapter) use ($book) {
+        $startPage = 1; // Initialize the start page number
+        $chapters = $book->chapters->map(function ($chapter) use ($book, &$startPage) {
             $pageCount = BanglaContent::where('book_id', $book->id)
                 ->where('chapter_id', $chapter->id)
                 ->distinct('page_no')
                 ->count('page_no');
 
             $chapter->page_count = $pageCount;
+            $endPage = $startPage + $pageCount - 1; // Calculate the end page number
+
+            $chapter->page_range = "$startPage-$endPage"; // Store the page range in the chapter object
+
+            $startPage = $endPage + 1; // Update the start page for the next chapter
 
             return $chapter;
         });
 
         return response()->json($chapters);
     }
+
+
+
 //    public function content(Book $book, Chapter $chapter)
 //    {
 //        try {
