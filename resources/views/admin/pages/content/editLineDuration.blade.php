@@ -44,13 +44,13 @@
                                     </div>
                                     <div class="col-md-5">
                                         <div class="row">
-                                            <div class="col-md-6 fv-row">
+                                            <div class="col-md-6 fv-row" >
                                                 <label class="d-flex align-items-center fs-6 fw-semibold required">Start Time</label>
-                                                <input type="text" name="start_time[]" class="form-control form-control-solid" value="{{ $contentBangla->start_time }}"  placeholder="00:00"/>
+                                                <input type="text" name="start_time[]"  id="timeInput1" class="form-control form-control-solid" value="{{ $contentBangla->start_time }}"   placeholder="00:00:000"/>
                                             </div>
-                                            <div class="col-md-6 fv-row">
+                                            <div class="col-md-6 fv-row" >
                                                 <label class="d-flex align-items-center fs-6 fw-semibold required">End Time</label>
-                                                <input type="text" name="end_time[]" class="form-control form-control-solid" value="{{ $contentBangla->end_time }}"  placeholder="00:00"/>
+                                                <input type="text" name="end_time[]" id="timeInput2" class="form-control form-control-solid" value="{{ $contentBangla->end_time }}"   placeholder="00:00:000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -116,4 +116,51 @@
         )
         @endif
     </script>
+
+    <script>
+        const timeInput1 = document.getElementById("timeInput1");
+        const timeInput2 = document.getElementById("timeInput2");
+
+        timeInput1.addEventListener("input", function (e) {
+            formatTime(e, timeInput1);
+        });
+
+        timeInput2.addEventListener("input", function (e) {
+            formatTime(e, timeInput2);
+        });
+
+        timeInput1.addEventListener("keydown", function (e) {
+            handleBackspace(e, timeInput1);
+        });
+
+        timeInput2.addEventListener("keydown", function (e) {
+            handleBackspace(e, timeInput2);
+        });
+
+        function formatTime(e, inputField) {
+            let inputValue = inputField.value;
+
+            // Remove any non-numeric characters
+            inputValue = inputValue.replace(/[^0-9]/g, "");
+
+            // Limit each part to the desired number of digits
+            inputValue = inputValue.slice(0, 2) + ":" + inputValue.slice(2, 4) + ":" + inputValue.slice(4, 7);
+
+            // Update the input field with the formatted value
+            inputField.value = inputValue;
+
+        }
+
+        function handleBackspace(e, inputField) {
+            if (e.key === 'Backspace') {
+                // Allow the user to delete characters using the Backspace key
+                let inputValue = inputField.value;
+                inputValue = inputValue.slice(0, -1);
+                inputField.value = inputValue;
+                e.preventDefault(); // Prevent the default Backspace behavior
+            }
+        }
+    </script>
+
+
 @endsection
