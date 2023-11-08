@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BanglaBookReferencePage;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
@@ -81,6 +82,7 @@ class BanglaContentController extends Controller
         return view('admin.pages.content.bnglaContentShowFormForFilter', compact('books', 'chapters', 'contents', 'bookId', 'chapterId'));
     }
 
+
     public function viewPage($bookId, $chapterId, $pageNo)
     {
         $books = Book::latest()->get();
@@ -92,6 +94,42 @@ class BanglaContentController extends Controller
             ->get();
         return view('admin.pages.content.viewBanglaLine', compact('contents', 'books', 'chapters'));
     }
+
+    public function createReferencePageBangla(Request $request,$bookId, $chapterId, $pageNo)
+    {
+        if($request->isMethod('POST'))
+        {
+            try {
+                $data= new BanglaBookReferencePage();
+                $data->book_id = $bookId;
+                $data->chapter_id = $chapterId;
+                $data->page_no = $pageNo;
+                $data->reference_page_no = $request->reference_page_no;
+                $data->save();
+                return redirect()->back()->with('success','Page No Added Successfully');
+            }
+            catch (\Exception $e){
+                return redirect()->back()->with('error','Something went wrong');
+            }
+        }
+        else
+        {
+            $book = Book::where('id',$bookId)->pluck('name')->first();;
+            $chapter = Chapter::where('id',$chapterId)->pluck('chapter_name')->first();;
+            $contents = BanglaContent::where('page_no', $pageNo)->pluck('line');
+            $pageContents =$contents->implode('');
+
+            $referencePageNo = BanglaBookReferencePage::where('book_id',$bookId)
+                ->where('chapter_id',$chapterId)
+                ->where('page_no',$pageNo)
+                ->pluck('reference_page_no')->first();
+            return view('admin.pages.reference.banglaReferencePageNo',compact('book','bookId',
+                'chapter','chapterId','pageContents','pageNo','referencePageNo'));
+        }
+    }
+
+
+
 
     public function editPage($bookId, $chapterId, $pageNo)
     {

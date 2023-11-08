@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\ArchieveController;
 use App\Http\Controllers\admin\BanglaContentController;
 use App\Http\Controllers\admin\BookController;
 use App\Http\Controllers\admin\ChapterController;
@@ -60,6 +61,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-duration-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'editDurationEnglish'])->name('edit.duration.english');
     Route::put('/update-content-english', [EnglishContentController::class, 'updateEnglishPageContent'])->name('update.content.english');
     Route::put('/update-duration-english', [EnglishContentController::class, 'updateEnglishPageDuration'])->name('update.duration.english');
+
+    //Bangle Content Page Reference Page No Add
+    //Route::match(['get', 'post'], 'slider-create', 'DashboardController@sliderCreate')->name('slider.create');
+    Route::match(['get', 'post'],'/create-reference-page-bangla/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'createReferencePageBangla'])->name('create.reference.page.bangla');
+
+    //Archive
+    Route::get('/archive',[ArchieveController::class, 'index'])->name('archive');
+    Route::post('/archive/store',[ArchieveController::class, 'store'])->name('archive.store');
+    Route::get('/archive/delete/{id}',[ArchieveController::class, 'destroy'])->name('archive.delete');
+
 
 });
 require __DIR__.'/auth.php';

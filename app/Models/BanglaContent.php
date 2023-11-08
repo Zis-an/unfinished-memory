@@ -27,4 +27,10 @@ class BanglaContent extends Model
     {
         return $this->belongsTo(Chapter::class, 'chapter_id');
     }
+
+    public function reference()
+    {
+        return $this->belongsTo(BanglaBookReferencePage::class, 'page_no', 'page_no');
+    }
+
 }

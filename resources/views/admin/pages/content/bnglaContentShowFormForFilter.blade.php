@@ -77,8 +77,10 @@
                                     <a href="{{ route('view.content', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">View</a>
                                     <a href="{{ route('edit.content', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">Edit</a>
                                     <a href="{{ route('edit.duration', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">Duration</a>
+                                    <a href="{{ route('create.reference.page.bangla', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">Reference Page</a>
                                     @else
                                         <a href="{{ route('view.content', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">View</a>
+                                        <a href="{{ route('create.reference.page.bangla', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentBangla->page_no]) }}" class="btn btn-info">Reference Page</a>
                                     @endif
                                 </td>
                             </tr>
@@ -93,7 +95,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             const bookSelect = document.getElementById('book_for_chapters');
             const chapterSelect = document.getElementById('chapters_for_selected_book');
-
             bookSelect.addEventListener('change', function () {
                 const selectedBookId = this.value;
                 // Clear existing chapter options
@@ -112,5 +113,9 @@
                 chapterSelect.disabled = selectedBookId === '';
             });
         });
+    </script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('kt_docs_ckeditor_classic');
     </script>
 @endsection

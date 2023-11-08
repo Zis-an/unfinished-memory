@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ArchieveController;
 use App\Http\Controllers\api\BanglaContentController;
 use App\Http\Controllers\api\EnglishContentController;
 use Illuminate\Http\Request;
@@ -37,3 +38,4 @@ Route::get('/english-books/{book}/chapters/{chapter}/content',[EnglishContentCon
 Route::get('/english-books/{book}/chapters/{chapter}/all-content', [EnglishContentController::class, 'chapterContent']);
 Route::get('/english-search',[EnglishContentController::class, 'searchByLine']);
 Route::get('/english-books/{book}/chapters/{chapter}/all-pages', [EnglishContentController::class, 'chapterContentPages']);
+Route::get('/archive',[ArchieveController::class, 'index']);

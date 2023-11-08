@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BanglaBookReferencePage;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
@@ -15,7 +16,10 @@ class BanglaContentController extends Controller
     public function searchByLine(Request $request)
     {
         $line = $request->input('line');
-        $results = BanglaContent::where('line', 'like', "%$line%")->with('chapter')->paginate(10);
+        $results = BanglaContent::where('line', 'like', "%$line%")->with('chapter','reference')->paginate(10);
+
+        //dd($results);
+
         return response()->json($results);
     }
 
@@ -37,10 +41,15 @@ class BanglaContentController extends Controller
             return $minutes * 60000 + $seconds * 1000 + $milliseconds;
         })->toArray();
 
+        $referencePageNo = BanglaBookReferencePage::where('page_no',$pageNo)
+            ->pluck('reference_page_no')->first();
+
+
         $contentData = $contents->map(function ($content) {
             return [
                 'id' => $content->id,
                 'line' => $content->line,
+                'page_no' => $content->page_no,
                 'type' => $content->type,
                 'startTime' => $content->start_time,
                 'endTime' => $content->end_time,
@@ -51,11 +60,13 @@ class BanglaContentController extends Controller
         return response()->json([
             'book' => $book,
             'chapter' => $chapter,
+            'reference_page_no'=>$referencePageNo,
             'lines' => $contentData,
             'startTime' => $startTimes,
             'endTime' => $endTimes,
             'pageNo' => $pageNo,
             'totalPage' => 50,
+
         ]);
     }
 
@@ -158,13 +169,17 @@ class BanglaContentController extends Controller
                 if ($contents->isEmpty()) {
                     return response()->json(['message' => 'No content found.']);
                 }
+
+                $referencePageNo = BanglaBookReferencePage::where('chapter_id',$chapterId)->get();
+
+
+
                 return response()->json([
                     'total_lines' => $totalLineCount,
+                    'reference_page_no' => $referencePageNo,
                     'contents' => $contents,
                     'startTime' => $startTimes,
                     'endTime' => $endTimes,
-
-
                 ]);
             }
 
@@ -285,10 +300,15 @@ class BanglaContentController extends Controller
                         $startPageNo = $pageNo; // Set the start page number
                     }
 
+
+                    $referencePageNo = BanglaBookReferencePage::where('page_no',$pageNo)
+                        ->pluck('reference_page_no')->first();
+
                     if (!isset($formattedContent[$pageNo])) {
                         $formattedContent[$pageNo] = [
                             'total_line' => 0,
                             'page_number' => $pageNo,
+                            'reference_page_number' => $referencePageNo,
                             'data' => [],
                             'start_time' => [],
                             'end_time' => [],
@@ -337,16 +357,13 @@ class BanglaContentController extends Controller
                 if (empty($formattedContent)) {
                     return response()->json(['message' => 'No content found.']);
                 }
-
                 //$lastPageNo = max(array_keys($formattedContent));
                 $lastPageNo = "" . max(array_keys($formattedContent));
                 return response()->json([
                     'startPageNo' => $startPageNo,
                     'lastPageNo' => $lastPageNo,
                     'contents' => array_values($formattedContent),
-
                 ]);
-
             }
 
             return response()->json(['message' => 'Invalid input. Please provide a valid book and chapter.']);
