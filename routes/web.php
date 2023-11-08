@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-duration/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'editDuration'])->name('edit.duration');
     Route::put('/update-content', [BanglaContentController::class, 'updatePageContent'])->name('update.content');
     Route::put('/update-duration', [BanglaContentController::class, 'updatePageDuration'])->name('update.duration');
+    //Bangle Content Page Reference Page No Add
+    Route::match(['get', 'post'],'/create-reference-page-bangla/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'createReferencePageBangla'])->name('create.reference.page.bangla');
 
 
     //English Content Show & Update
@@ -61,10 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-duration-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'editDurationEnglish'])->name('edit.duration.english');
     Route::put('/update-content-english', [EnglishContentController::class, 'updateEnglishPageContent'])->name('update.content.english');
     Route::put('/update-duration-english', [EnglishContentController::class, 'updateEnglishPageDuration'])->name('update.duration.english');
-
-    //Bangle Content Page Reference Page No Add
-    //Route::match(['get', 'post'], 'slider-create', 'DashboardController@sliderCreate')->name('slider.create');
-    Route::match(['get', 'post'],'/create-reference-page-bangla/{bookId}/{chapterId}/{pageNo}/', [BanglaContentController::class, 'createReferencePageBangla'])->name('create.reference.page.bangla');
+    //English Content Page Reference Page No Add
+    Route::match(['get', 'post'],'/create-reference-page-english/{bookId}/{chapterId}/{pageNo}/', [EnglishContentController::class, 'createReferencePageEnglish'])->name('create.reference.page.english');
 
     //Archive
     Route::get('/archive',[ArchieveController::class, 'index'])->name('archive');

@@ -95,36 +95,63 @@ class BanglaContentController extends Controller
         return view('admin.pages.content.viewBanglaLine', compact('contents', 'books', 'chapters'));
     }
 
-    public function createReferencePageBangla(Request $request,$bookId, $chapterId, $pageNo)
-    {
-        if($request->isMethod('POST'))
-        {
-            try {
-                $data= new BanglaBookReferencePage();
-                $data->book_id = $bookId;
-                $data->chapter_id = $chapterId;
-                $data->page_no = $pageNo;
-                $data->reference_page_no = $request->reference_page_no;
-                $data->save();
-                return redirect()->back()->with('success','Page No Added Successfully');
-            }
-            catch (\Exception $e){
-                return redirect()->back()->with('error','Something went wrong');
-            }
-        }
-        else
-        {
-            $book = Book::where('id',$bookId)->pluck('name')->first();;
-            $chapter = Chapter::where('id',$chapterId)->pluck('chapter_name')->first();;
-            $contents = BanglaContent::where('page_no', $pageNo)->pluck('line');
-            $pageContents =$contents->implode('');
+//    public function createReferencePageBangla(Request $request,$bookId, $chapterId, $pageNo)
+//    {
+//        if($request->isMethod('POST'))
+//        {
+//            try {
+//                $data= new BanglaBookReferencePage();
+//                $data->book_id = $bookId;
+//                $data->chapter_id = $chapterId;
+//                $data->page_no = $pageNo;
+//                $data->reference_page_no = $request->reference_page_no;
+//                $data->save();
+//                return redirect()->back()->with('success','Page No Added Successfully');
+//            }
+//            catch (\Exception $e){
+//                return redirect()->back()->with('error','Something went wrong');
+//            }
+//        }
+//        else
+//        {
+//            $book = Book::where('id',$bookId)->pluck('name')->first();;
+//            $chapter = Chapter::where('id',$chapterId)->pluck('chapter_name')->first();;
+//            $contents = BanglaContent::where('page_no', $pageNo)->pluck('line');
+//            $pageContents =$contents->implode('');
+//            $referencePageNo = BanglaBookReferencePage::where('book_id',$bookId)
+//                ->where('chapter_id',$chapterId)
+//                ->where('page_no',$pageNo)
+//                ->pluck('reference_page_no')->first();
+//            return view('admin.pages.reference.banglaReferencePageNo',compact('book','bookId',
+//                'chapter','chapterId','pageContents','pageNo','referencePageNo'));
+//        }
+//    }
 
-            $referencePageNo = BanglaBookReferencePage::where('book_id',$bookId)
-                ->where('chapter_id',$chapterId)
-                ->where('page_no',$pageNo)
-                ->pluck('reference_page_no')->first();
-            return view('admin.pages.reference.banglaReferencePageNo',compact('book','bookId',
-                'chapter','chapterId','pageContents','pageNo','referencePageNo'));
+    public function createReferencePageBangla(Request $request, $bookId, $chapterId, $pageNo)
+    {
+        if ($request->isMethod('POST')) {
+            try {
+                BanglaBookReferencePage::updateOrCreate(
+                    ['book_id' => $bookId, 'chapter_id' => $chapterId, 'page_no' => $pageNo],
+                    ['reference_page_no' => $request->reference_page_no]
+                );
+
+                return redirect()->back()->with('success', 'Page No Added/Updated Successfully');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        } else {
+            $book = Book::where('id', $bookId)->pluck('name')->first();
+            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $contents = BanglaContent::where('page_no', $pageNo)->pluck('line');
+            $pageContents = $contents->implode('');
+            $referencePageNo = BanglaBookReferencePage::where('book_id', $bookId)
+                ->where('chapter_id', $chapterId)
+                ->where('page_no', $pageNo)
+                ->pluck('reference_page_no')
+                ->first();
+
+            return view('admin.pages.reference.banglaReferencePageNo', compact('book', 'bookId', 'chapter', 'chapterId', 'pageContents', 'pageNo', 'referencePageNo'));
         }
     }
 

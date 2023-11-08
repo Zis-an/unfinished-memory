@@ -77,8 +77,10 @@
                                         <a href="{{ route('view.content.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">View</a>
                                         <a href="{{ route('edit.content.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">Edit</a>
                                         <a href="{{ route('edit.duration.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">Duration</a>
+                                        <a href="{{ route('create.reference.page.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">Reference Page</a>
                                     @else
                                         <a href="{{ route('view.content.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">View</a>
+                                        <a href="{{ route('create.reference.page.english', ['bookId' => $bookId, 'chapterId' => $chapterId, 'pageNo' => $contentEnglish->page_no]) }}" class="btn btn-info">Reference Page</a>
                                     @endif
                                 </td>
                             </tr>

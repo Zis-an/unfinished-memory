@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\EnglishBookReferencePage;
 use App\Models\EnglishContent;
 use Illuminate\Http\Request;
 use DB;
@@ -91,6 +92,39 @@ class EnglishContentController extends Controller
             ->get();
         return view('admin.pages.content.viewEnglishLine', compact('contents', 'books', 'chapters'));
     }
+
+
+    public function createReferencePageEnglish(Request $request, $bookId, $chapterId, $pageNo)
+    {
+        if ($request->isMethod('POST')) {
+            try {
+                EnglishBookReferencePage::updateOrCreate(
+                    ['book_id' => $bookId, 'chapter_id' => $chapterId, 'page_no' => $pageNo],
+                    ['reference_page_no' => $request->reference_page_no]
+                );
+
+                return redirect()->back()->with('success', 'Page No Added/Updated Successfully');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        } else {
+            $book = Book::where('id', $bookId)->pluck('name')->first();
+            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $contents = EnglishContent::where('page_no', $pageNo)->pluck('line');
+            $pageContents = $contents->implode('');
+            $referencePageNo = EnglishBookReferencePage::where('book_id', $bookId)
+                ->where('chapter_id', $chapterId)
+                ->where('page_no', $pageNo)
+                ->pluck('reference_page_no')
+                ->first();
+
+            return view('admin.pages.reference.englishReferencePageNo', compact('book', 'bookId', 'chapter', 'chapterId', 'pageContents', 'pageNo', 'referencePageNo'));
+        }
+    }
+
+
+
+
 
     public function editPageEnglish($bookId, $chapterId, $pageNo)
     {

@@ -17,9 +17,6 @@ class BanglaContentController extends Controller
     {
         $line = $request->input('line');
         $results = BanglaContent::where('line', 'like', "%$line%")->with('chapter','reference')->paginate(10);
-
-        //dd($results);
-
         return response()->json($results);
     }
 
@@ -65,7 +62,7 @@ class BanglaContentController extends Controller
             'startTime' => $startTimes,
             'endTime' => $endTimes,
             'pageNo' => $pageNo,
-            'totalPage' => 50,
+            'totalPage' => 187,
 
         ]);
     }
