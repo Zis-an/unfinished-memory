@@ -2,24 +2,36 @@
 <head><base href=""/>
     <title>Unfinished Memory</title>
     <meta charset="utf-8" />
-    <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{asset('backend/assets/media/logos/favicon.ico')}}" />
+    <link rel="shortcut icon" href="{{asset('backend/assets/media/avatars/mujib.png')}}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <link href="{{asset('backend/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('backend/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('backend/assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('backend/assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-
+    <style>
+        .aside-menu .menu-item .menu-link.active {
+            background-color: #EDE4D1;
+        }
+        .aside-menu .menu-item .menu-link.active .menu-icon, .aside-menu .menu-item .menu-link.active .menu-icon .svg-icon, .aside-menu .menu-item .menu-link.active .menu-icon i {
+            color: #2F2F3C;
+        }
+        .aside-menu .menu-item .menu-link.active .menu-title {
+            color: #2F2F3C;
+        }
+        .aside-menu .menu-item .menu-link.active .menu-bullet .bullet {
+            background-color: #2F2F3C;
+        }
+    </style>
 </head>
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
 <div class="d-flex flex-column flex-root">
 
     <div class="page d-flex flex-row flex-column-fluid">
         <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
-                <a href="#">
-                    <h4 style="color: white">Unfinished Memory</h4>
+                <!--begin::Logo-->
+                <a href="{{ route('dashboard') }}">
+                    <img alt="Logo" src="{{ URL::to('backend/assets/media/logos/logo.png') }}" class="logo" style="width: 75px;">
                 </a>
                 <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle me-n2" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize">
                     <i class="ki-outline ki-double-left fs-1 rotate-180"></i>
@@ -29,7 +41,6 @@
             <div class="aside-menu flex-column-fluid">
                 <div class="hover-scroll-overlay-y my-2 py-2" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
                     <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
-
                         <div class="menu-item menu-accordion">
                             <a href="{{route('dashboard')}}" class="menu-link">
                             <span class="menu-icon">
@@ -38,24 +49,24 @@
                                 <span class="menu-title">Dashboards</span>
                             </a>
                         </div>
-
-
                         <div class="menu-item pt-5">
                             <div class="menu-content">
                                 <span class="menu-heading fw-bold text-uppercase fs-7">Pages</span>
                             </div>
                         </div>
-
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-
                             <span class="menu-link">
                                 <span class="menu-icon">
-                                    <i class="ki-outline ki-address-book fs-2"></i>
+                                    <i class="ki-duotone ki-book-open fs-2">
+                                         <span class="path1"></span>
+                                         <span class="path2"></span>
+                                         <span class="path3"></span>
+                                         <span class="path4"></span>
+                                    </i>
                                 </span>
                                 <span class="menu-title">Book</span>
                                 <span class="menu-arrow"></span>
                             </span>
-
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{route('book')}}">
@@ -66,7 +77,6 @@
                                     </a>
                                 </div>
                             </div>
-
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{route('chapter')}}">
@@ -79,18 +89,17 @@
                             </div>
                         </div>
 
-
-
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-
                             <span class="menu-link">
                                 <span class="menu-icon">
-                                    <i class="ki-outline ki-address-book fs-2"></i>
+                                    <i class="ki-duotone ki-notepad-edit fs-2">
+                                         <span class="path1"></span>
+                                         <span class="path2"></span>
+                                    </i>
                                 </span>
                                 <span class="menu-title">Content</span>
                                 <span class="menu-arrow"></span>
                             </span>
-
 
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
@@ -114,17 +123,6 @@
                                 </div>
                             </div>
 
-{{--                            <div class="menu-sub menu-sub-accordion">--}}
-{{--                                <div class="menu-item">--}}
-{{--                                    <a class="menu-link" href="{{route('bangla.contents.missing')}}">--}}
-{{--                                        <span class="menu-bullet">--}}
-{{--                                            <span class="bullet bullet-dot"></span>--}}
-{{--                                        </span>--}}
-{{--                                        <span class="menu-title">Missing Bangla Content</span>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{route('english.content')}}">
@@ -135,7 +133,6 @@
                                     </a>
                                 </div>
                             </div>
-
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{route('english.contents.show.all')}}">
@@ -146,10 +143,6 @@
                                     </a>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -184,7 +177,6 @@
                             </div>
                         </div>
 
-
                         <div class="topbar d-flex align-items-stretch flex-shrink-0">
                             <div class="d-flex align-items-center">
                                 <a href="#" class="topbar-item px-3 px-lg-4" data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -213,19 +205,30 @@
 
                             <div class="d-flex align-items-stretch" id="kt_header_user_menu_toggle">
                                 <div class="topbar-item cursor-pointer symbol px-3 px-lg-5 me-n3 me-lg-n5 symbol-30px symbol-md-35px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
-                                    <img src="{{URL::to('backend/assets/media/avatars/300-1.jpg')}}" alt="metronic" />
+                                    <img src="{{URL::to('backend/assets/media/avatars/mujib.png')}}" alt="metronic" />
                                 </div>
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
-                                    <div class="menu-item px-5 my-1">
-                                        <a href="#" class="menu-link px-5">Account Settings</a>
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content d-flex align-items-center px-3">
+                                            <div class="symbol symbol-50px me-5">
+                                                <img alt="Logo" src="{{URL::to('backend/assets/media/avatars/mujib.png')}}">
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <div class="fw-bold d-flex align-items-center fs-5">
+                                                    Admin
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="separator my-2"></div>
+
                                     <div class="menu-item px-5">
-                                        <form method="POST" action="{{ route('logout') }}">
+                                        <form method="POST" action="{{ route('logout') }}" class="mb-0">
                                             @csrf
                                             <x-dropdown-link :href="route('logout')"
                                                              onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                                {{ __('Log Out') }}
+                                                this.closest('form').submit();" class="menu-link px-5">
+                                                    {{ __('Log Out') }}
                                             </x-dropdown-link>
                                         </form>
                                     </div>
@@ -248,12 +251,6 @@
 <script src="{{asset('backend/assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('backend/assets/js/scripts.bundle.js')}}"></script>
 <script src="{{asset('backend/assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<script src="{{asset('backend/assets/js/widgets.bundle.js')}}"></script>
-<script src="{{asset('backend/assets/js/custom/widgets.js')}}"></script>
-<script src="{{asset('backend/assets/js/custom/apps/chat/chat.js')}}"></script>
-<script src="{{asset('backend/assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
-<script src="{{asset('backend/assets/js/custom/utilities/modals/create-app.js')}}"></script>
-<script src="{{asset('backend/assets/js/custom/utilities/modals/users-search.js')}}"></script>
 <script>
     $(document).ready(function () {
         var currentUrl = window.location.href;
