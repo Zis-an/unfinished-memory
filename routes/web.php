@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ArchieveController;
+use App\Http\Controllers\admin\BanglaAudioController;
 use App\Http\Controllers\admin\BanglaContentController;
 use App\Http\Controllers\admin\BookController;
 use App\Http\Controllers\admin\ChapterController;
 
+use App\Http\Controllers\admin\EnglishAudioController;
 use App\Http\Controllers\admin\EnglishContentController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +73,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/archive/store',[ArchieveController::class, 'store'])->name('archive.store');
     Route::get('/archive/delete/{id}',[ArchieveController::class, 'destroy'])->name('archive.delete');
 
+    //Bangla Audio
+    Route::get('/audio',[BanglaAudioController::class, 'index'])->name('audio');
+    Route::post('/audio/store',[BanglaAudioController::class, 'store'])->name('audio.store');
+    Route::get('/audio/delete/{id}',[BanglaAudioController::class, 'destroy'])->name('audio.delete');
+
+    //English Audio
+    Route::get('/audio-english',[EnglishAudioController::class, 'index'])->name('audio.english');
+    Route::post('/audio-english/store',[EnglishAudioController::class, 'store'])->name('audio.english.store');
+    Route::get('/audio-english/delete/{id}',[EnglishAudioController::class, 'destroy'])->name('audio.english.delete');
 
 });
 require __DIR__.'/auth.php';

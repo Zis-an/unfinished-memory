@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BanglaAudio;
 use App\Models\BanglaBookReferencePage;
 use App\Models\BanglaContent;
 use App\Models\Book;
@@ -272,10 +273,13 @@ class BanglaContentController extends Controller
 //    }
     public function chapterContentPages(Book $book, Chapter $chapter)
     {
+
+
         try {
             $bookId = $book->id;
             $chapterId = $chapter->id;
-
+            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $chapterAudio = BanglaAudio::where('chapter_id', $chapterId)->pluck('file')->first();
             if ($bookId !== null && $chapterId !== null) {
                 $contents = BanglaContent::where([
                     'book_id' => $bookId,
@@ -355,10 +359,13 @@ class BanglaContentController extends Controller
                     return response()->json(['message' => 'No content found.']);
                 }
                 //$lastPageNo = max(array_keys($formattedContent));
+                //$chapter = Chapter::where('id', $chapterId)->pluck('name')->first();
                 $lastPageNo = "" . max(array_keys($formattedContent));
                 return response()->json([
                     'startPageNo' => $startPageNo,
                     'lastPageNo' => $lastPageNo,
+                    'chapter_name' => $chapter,
+                    'chapter_audio' => "storage/audio/audioBanglaFile/".$chapterAudio,
                     'contents' => array_values($formattedContent),
                 ]);
             }

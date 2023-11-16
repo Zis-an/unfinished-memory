@@ -14,4 +14,8 @@ class EnglishBookReferencePage extends Model
         'page_no',
         'reference_page_no',
     ];
+    public function reference()
+    {
+        return $this->hasMany(EnglishContent::class, 'page_no', 'page_no');
+    }
 }

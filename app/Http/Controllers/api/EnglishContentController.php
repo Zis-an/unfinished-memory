@@ -7,6 +7,7 @@ use App\Models\BanglaBookReferencePage;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\EnglishAudio;
 use App\Models\EnglishBookReferencePage;
 use App\Models\EnglishContent;
 use Exception;
@@ -276,6 +277,9 @@ class EnglishContentController extends Controller
         try {
             $bookId = $book->id;
             $chapterId = $chapter->id;
+            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
+
 
             if ($bookId !== null && $chapterId !== null) {
                 $contents = EnglishContent::where([
@@ -360,6 +364,8 @@ class EnglishContentController extends Controller
                 return response()->json([
                     'startPageNo' => $startPageNo,
                     'lastPageNo' => $lastPageNo,
+                    'chapter_name' => $chapter,
+                    'chapter_audio' => "storage/audio/audioBanglaFile/".$chapterAudio,
                     'contents' => array_values($formattedContent),
                 ]);
             }

@@ -27,4 +27,8 @@ class EnglishContent extends Model
     {
         return $this->belongsTo(Chapter::class, 'chapter_id');
     }
+    public function reference()
+    {
+        return $this->belongsTo(EnglishBookReferencePage::class, 'page_no', 'page_no');
+    }
 }

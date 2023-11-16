@@ -135,6 +135,17 @@
 
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
+                                    <a class="menu-link" href="{{route('audio')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Chapter wise Bangla Audio</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
                                     <a class="menu-link" href="{{route('english.content')}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
@@ -153,6 +164,18 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{route('audio.english')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Chapter wise English Audio</span>
+                                    </a>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
