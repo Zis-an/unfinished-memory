@@ -18,7 +18,7 @@ class EnglishContentController extends Controller
     public function searchByLine(Request $request)
     {
         $line = $request->input('line');
-        $results = EnglishContent::where('line', 'like', "%$line%")->with('chapter','reference','chapter.banglaAudio')->paginate(10);
+        $results = EnglishContent::where('line', 'like', "%$line%")->with('chapter','reference','chapter.englishAudio')->paginate(10);
         return response()->json($results);
     }
 
