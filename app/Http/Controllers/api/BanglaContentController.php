@@ -17,7 +17,7 @@ class BanglaContentController extends Controller
     public function searchByLine(Request $request)
     {
         $line = $request->input('line');
-        $results = BanglaContent::where('line', 'like', "%$line%")->with('chapter','reference')->paginate(10);
+        $results = BanglaContent::where('line', 'like', "%$line%")->with('chapter','reference','chapter.banglaAudio')->paginate(10);
         return response()->json($results);
     }
 
@@ -94,6 +94,10 @@ class BanglaContentController extends Controller
             // Create an array of page numbers within the page range
             $pageNumbers = range($startPage, $endPage);
             $chapter->page_numbers = $pageNumbers;
+
+
+            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
+            $chapter->audio_file = $audioFile;
 
             $startPage = $endPage + 1; // Update the start page for the next chapter
 

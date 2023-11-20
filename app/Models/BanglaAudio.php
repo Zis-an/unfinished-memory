@@ -17,4 +17,6 @@ class BanglaAudio extends Model
     {
         return $this->belongsTo(Chapter::class,'chapter_id');
     }
+
+
 }

@@ -32,4 +32,14 @@ class Chapter extends Model
         return $this->hasMany(EnglishContent::class);
     }
 
+    public function banglaAudio()
+    {
+        return $this->hasOne(BanglaAudio::class);
+    }
+
+    public function englishAudio()
+    {
+        return $this->hasOne(EnglishAudio::class);
+    }
+
 }

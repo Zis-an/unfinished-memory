@@ -11,6 +11,8 @@ class ArchieveController extends Controller
     public function index()
     {
         $archives = Archieve::latest()->get();
-        return response()->json($archives);
+        return response()->json([
+            'allPhoto' => $archives
+        ]);
     }
 }
