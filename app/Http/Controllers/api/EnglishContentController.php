@@ -104,6 +104,11 @@ class EnglishContentController extends Controller
             return $chapter;
         });
 
+        $perPage = 10;
+        $currentPage = request()->input('page', 1);
+        $pagedData = $chapters->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $chapters = new \Illuminate\Pagination\LengthAwarePaginator($pagedData, count($chapters), $perPage);
+
         return response()->json($chapters);
     }
 

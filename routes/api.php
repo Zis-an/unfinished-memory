@@ -39,3 +39,12 @@ Route::get('/english-books/{book}/chapters/{chapter}/all-content', [EnglishConte
 Route::get('/english-search',[EnglishContentController::class, 'searchByLine']);
 Route::get('/english-books/{book}/chapters/{chapter}/all-pages', [EnglishContentController::class, 'chapterContentPages']);
 Route::get('/archive',[ArchieveController::class, 'index']);
+
+//Route::get('/chapter/page/{pageNo}', [EnglishContentController::class, 'contentAll']);
+//Route::get('/books',[EnglishContentController::class, 'index']);
+//Route::get('/books/{book}/chapters',[EnglishContentController::class, 'chapters']);
+//Route::get('/books/{book}/chapters/{chapter}/content',[EnglishContentController::class, 'content']);
+//Route::get('/books/{book}/chapters/{chapter}/all-content', [EnglishContentController::class, 'chapterContent']);
+//Route::get('/english-search',[EnglishContentController::class, 'searchByLine']);
+//Route::get('/books/{book}/chapters/{chapter}/all-pages', [EnglishContentController::class, 'chapterContentPages']);
+//Route::get('/archive',[ArchieveController::class, 'index']);
