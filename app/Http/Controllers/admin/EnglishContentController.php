@@ -89,7 +89,7 @@ class EnglishContentController extends Controller
         $contents = EnglishContent::where('book_id', $bookId)
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
-            ->with('book','chapter')
+            ->with('book','english_chapters')
             ->get();
         return view('admin.pages.content.viewEnglishLine', compact('contents', 'books', 'chapters'));
     }

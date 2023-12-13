@@ -106,7 +106,7 @@
                 filteredChapters.forEach(chapter => {
                     const option = document.createElement('option');
                     option.value = chapter.id;
-                    option.textContent = chapter.chapter_name;
+                    option.textContent = `${chapter.id} - ${chapter.chapter_name}`;
                     chapterSelect.appendChild(option);
                 });
                 // Enable or disable the chapter dropdown

@@ -52,7 +52,7 @@
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $contentEnglish->type }}</td>
                                 <td>{{ $contentEnglish->book->name }}</td>
-                                <td>{{ $contentEnglish->chapter->chapter_name }}</td>
+                                <td>{{ $contentEnglish->english_chapters->chapter_name }}</td>
                                 <td>{{ $contentEnglish->line }}</td>
                                 <td>{{ $contentEnglish->start_time ? $contentEnglish->start_time:'N/A' }}</td>
                                 <td>{{ $contentEnglish->end_time ? $contentEnglish->end_time:'N/A' }}</td>
