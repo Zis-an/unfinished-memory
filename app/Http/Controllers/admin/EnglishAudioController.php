@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Chapter;
+use App\Models\EngChapter;
 use App\Models\EnglishAudio;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -12,7 +13,7 @@ class EnglishAudioController extends Controller
 {
     public function index()
     {
-        $chapters = Chapter::where('book_id',2)->get();
+        $chapters = EngChapter::where('book_id',2)->get();
         $englishAudio = EnglishAudio::with('chapter')->latest()->get();
         return view('admin.pages.audio.audio_english',compact('englishAudio','chapters'));
     }

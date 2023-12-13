@@ -83,7 +83,15 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Book Chapter</span>
+                                        <span class="menu-title">Book Chapter Bangla</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{route('english.chapter')}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Book Chapter English</span>
                                     </a>
                                 </div>
                             </div>

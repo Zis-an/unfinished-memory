@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\EngChapter;
 use App\Models\EnglishBookReferencePage;
 use App\Models\EnglishContent;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class EnglishContentController extends Controller
     public function index()
     {
         $books = Book::where('language','=','english')->get();
-        $chapters = Chapter::latest()->get();
+        $chapters = EngChapter::latest()->get();
         $englishContent = EnglishContent::latest()->first();
         $pageNo = $englishContent? $englishContent->page_no : 0;
         return view('admin.pages.content.englishContent', compact('books', 'chapters','pageNo'));
@@ -67,7 +68,7 @@ class EnglishContentController extends Controller
     public function englishContentShowAll(Request $request)
     {
         $books = Book::where('language','=','english')->get();
-        $chapters = Chapter::get();
+        $chapters = EngChapter::get();
         $bookId = $request->input('book_id');
         $chapterId = $request->input('chapter_id');
         $query = EnglishContent::where('book_id', $bookId)->where('chapter_id', $chapterId);
@@ -84,7 +85,7 @@ class EnglishContentController extends Controller
     public function viewPageEnglish($bookId, $chapterId, $pageNo)
     {
         $books = Book::latest()->get();
-        $chapters = Chapter::latest()->get();
+        $chapters = EngChapter::latest()->get();
         $contents = EnglishContent::where('book_id', $bookId)
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
@@ -109,7 +110,7 @@ class EnglishContentController extends Controller
             }
         } else {
             $book = Book::where('id', $bookId)->pluck('name')->first();
-            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $chapter = EngChapter::where('id', $chapterId)->pluck('chapter_name')->first();
             $contents = EnglishContent::where('page_no', $pageNo)->pluck('line');
             $pageContents = $contents->implode('');
             $referencePageNo = EnglishBookReferencePage::where('book_id', $bookId)
@@ -129,7 +130,7 @@ class EnglishContentController extends Controller
     public function editPageEnglish($bookId, $chapterId, $pageNo)
     {
         $books = Book::latest()->get();
-        $chapters = Chapter::latest()->get();
+        $chapters = EngChapter::latest()->get();
         $contents = EnglishContent::where('book_id', $bookId)
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)
@@ -141,7 +142,7 @@ class EnglishContentController extends Controller
     public function editDurationEnglish($bookId, $chapterId, $pageNo)
     {
         $books = Book::latest()->get();
-        $chapters = Chapter::latest()->get();
+        $chapters = EngChapter::latest()->get();
         $contents = EnglishContent::where('book_id', $bookId)
             ->where('chapter_id', $chapterId)
             ->where('page_no', $pageNo)

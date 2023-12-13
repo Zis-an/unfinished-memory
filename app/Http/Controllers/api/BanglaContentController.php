@@ -111,11 +111,12 @@ class BanglaContentController extends Controller
     }
 
 
-//
+
 //    public function chapters(Book $book)
 //    {
+//
 //        $startPage = 1;
-//        $chapters = $book->chapters->map(function ($chapter) use ($book, &$startPage) {
+//        $chapters = $book->chapters->map(function ($chapter) use ($book, & $startPage) {
 //            $pageCount = BanglaContent::where('book_id', $book->id)
 //                ->where('chapter_id', $chapter->id)
 //                ->distinct('page_no')
@@ -134,28 +135,80 @@ class BanglaContentController extends Controller
 //    }
 
 
+//    public function chapters(Book $book)
+//    {
+//        $perPage = 10;
+//        $chapters = $book->chapters()->paginate($perPage);
+//        $chapters->getCollection()->transform(function ($chapter) use ($book) {
+//            $pageCount = BanglaContent::where('book_id', $book->id)
+//                ->where('chapter_id', $chapter->id)
+//                ->distinct('page_no')
+//                ->count('page_no');
+//            $endPage = $chapter->page + $pageCount - 1;
+//            $chapter->page_count = $pageCount;
+//            $chapter->page_range = "{$chapter->page}-$endPage";
+//            $pageNumbers = range($chapter->page, $endPage);
+//            $chapter->page_numbers = $pageNumbers;
+//            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
+//            $chapter->audio_file = $audioFile;
+//            return $chapter;
+//        });
+//        return response()->json($chapters);
+//    }
+
+
     public function chapters(Book $book)
     {
-        // Assuming $perPage is the number of items you want per page
-        $perPage = 10; // You can adjust this based on your needs
+        $perPage =10;
         $chapters = $book->chapters()->paginate($perPage);
-        $chapters->getCollection()->transform(function ($chapter) use ($book) {
+        $chapters->getCollection()->transform(function ($chapter) use ($book, $chapters, $perPage) {
+            $currentPage = $chapters->currentPage();
             $pageCount = BanglaContent::where('book_id', $book->id)
                 ->where('chapter_id', $chapter->id)
                 ->distinct('page_no')
                 ->count('page_no');
-            $endPage = $chapter->page + $pageCount - 1;
+            $startPage = ($currentPage - 1) * $perPage + 1;
+            $endPage = $startPage + $pageCount - 1;
             $chapter->page_count = $pageCount;
-            $chapter->page_range = "{$chapter->page}-$endPage";
-            $pageNumbers = range($chapter->page, $endPage);
+            $chapter->page_range = "$startPage-$endPage";
+            $pageNumbers = range($startPage, $endPage);
             $chapter->page_numbers = $pageNumbers;
             $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
             $chapter->audio_file = $audioFile;
             return $chapter;
         });
-
         return response()->json($chapters);
     }
+
+//    public function chapters(Book $book)
+//    {
+//        $perPage = 3;
+//        $chapters = $book->chapters()->paginate($perPage);
+//        $chapters->getCollection()->transform(function ($chapter) use ($book, $chapters) {
+//            $pageCount = BanglaContent::where('book_id', $book->id)
+//                ->where('chapter_id', $chapter->id)
+//                ->distinct('page_no')
+//                ->count('page_no');
+//
+//            // Use $chapters->firstItem() to get the starting number of the items for the current page
+//            $startPage = $chapters->firstItem();
+//            $endPage = $startPage + $pageCount - 1;
+//
+//            $chapter->page_count = $pageCount;
+//            $chapter->page_range = "{$startPage}-{$endPage}";
+//            $pageNumbers = range($startPage, $endPage);
+//            $chapter->page_numbers = $pageNumbers;
+//            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
+//            $chapter->audio_file = $audioFile;
+//            return $chapter;
+//        });
+//        return response()->json($chapters);
+//    }
+
+
+
+
+
 
 //    public function chapters(Book $book)
 //    {

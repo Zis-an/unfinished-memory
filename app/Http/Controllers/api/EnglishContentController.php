@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BanglaAudio;
 use App\Models\BanglaBookReferencePage;
 use App\Models\BanglaContent;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\EngChapter;
 use App\Models\EnglishAudio;
 use App\Models\EnglishBookReferencePage;
 use App\Models\EnglishContent;
@@ -26,7 +28,7 @@ class EnglishContentController extends Controller
     {
         $contents = EnglishContent::where('page_no', $pageNo)->get();
         $firstContent = $contents->first();
-        $chapter = Chapter::find($firstContent->chapter_id);
+        $chapter = EngChapter::find($firstContent->chapter_id);
         $book = Book::find($chapter->book_id);
 
         // Extract start times and end times into separate arrays
@@ -112,32 +114,55 @@ class EnglishContentController extends Controller
 //        return response()->json($chapters);
 //    }
 
+//    public function chapters(Book $book)
+//    {
+//        // Assuming $perPage is the number of items you want per page
+//        $perPage = 10; // You can adjust this based on your needs
+//        $chapters = $book->chapters()->paginate($perPage);
+//        $chapters->getCollection()->transform(function ($chapter) use ($book) {
+//            $pageCount = EnglishContent::where('book_id', $book->id)
+//                ->where('chapter_id', $chapter->id)
+//                ->distinct('page_no')
+//                ->count('page_no');
+//            $endPage = $chapter->page + $pageCount - 1;
+//            $chapter->page_count = $pageCount;
+//            $chapter->page_range = "{$chapter->page}-$endPage";
+//            $pageNumbers = range($chapter->page, $endPage);
+//            $chapter->page_numbers = $pageNumbers;
+//            $audioFile = EnglishAudio::where('chapter_id', $chapter->id)->value('file');
+//            $chapter->audio_file = $audioFile;
+//            return $chapter;
+//        });
+//
+//        return response()->json($chapters);
+//    }
+
+
     public function chapters(Book $book)
     {
-        // Assuming $perPage is the number of items you want per page
-        $perPage = 10; // You can adjust this based on your needs
+        $perPage =10;
         $chapters = $book->chapters()->paginate($perPage);
-        $chapters->getCollection()->transform(function ($chapter) use ($book) {
+        $chapters->getCollection()->transform(function ($chapter) use ($book, $chapters, $perPage) {
+            $currentPage = $chapters->currentPage();
             $pageCount = EnglishContent::where('book_id', $book->id)
                 ->where('chapter_id', $chapter->id)
                 ->distinct('page_no')
                 ->count('page_no');
-            $endPage = $chapter->page + $pageCount - 1;
+            $startPage = ($currentPage - 1) * $perPage + 1;
+            $endPage = $startPage + $pageCount - 1;
             $chapter->page_count = $pageCount;
-            $chapter->page_range = "{$chapter->page}-$endPage";
-            $pageNumbers = range($chapter->page, $endPage);
+            $chapter->page_range = "$startPage-$endPage";
+            $pageNumbers = range($startPage, $endPage);
             $chapter->page_numbers = $pageNumbers;
             $audioFile = EnglishAudio::where('chapter_id', $chapter->id)->value('file');
             $chapter->audio_file = $audioFile;
             return $chapter;
         });
-
         return response()->json($chapters);
     }
 
 
-
-    public function content(Book $book, Chapter $chapter)
+    public function content(Book $book, EngChapter $chapter)
     {
 
         try {
@@ -170,7 +195,7 @@ class EnglishContentController extends Controller
     }
 
 
-    public function chapterContent(Book $book, Chapter $chapter)
+    public function chapterContent(Book $book, EngChapter $chapter)
     {
         try {
             $bookId = $book->id;
@@ -301,12 +326,12 @@ class EnglishContentController extends Controller
 //            return response()->json(['message' => 'An error occurred.']);
 //        }
 //    }
-    public function chapterContentPages(Book $book, Chapter $chapter)
+    public function chapterContentPages(Book $book, EngChapter $chapter)
     {
         try {
             $bookId = $book->id;
             $chapterId = $chapter->id;
-            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+            $chapter = EngChapter::where('id', $chapterId)->pluck('chapter_name')->first();
             $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
 
 

@@ -40,6 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/chapter/update/{id}',[ChapterController::class, 'update'])->name('chapter.update');
     Route::get('/chapter/delete/{id}',[ChapterController::class, 'destroy'])->name('chapter.delete');
 
+
+    Route::get('/english-chapter',[ChapterController::class, 'englishChapter'])->name('english.chapter');
+    Route::post('/english/chapter/store',[ChapterController::class, 'storeEnglishChapter'])->name('english.chapter.store');
+    Route::put('/english/chapter/update/{id}',[ChapterController::class, 'updateEnglishChapter'])->name('english.chapter.update');
+    Route::get('/english/chapter/delete/{id}',[ChapterController::class, 'destroyEnglishChapter'])->name('english.chapter.delete');
+
     //Bangla Content Store
     Route::get('/bangla-content', [BanglaContentController::class, 'index'])->name('bangla.content');
     Route::post('/bangla-content-store', [BanglaContentController::class, 'store'])->name('bangla.content.store');
