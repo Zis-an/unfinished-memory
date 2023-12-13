@@ -23,9 +23,9 @@ class EnglishContent extends Model
     {
         return $this->belongsTo(Book::class, 'book_id');
     }
-    public function chapter()
+    public function english_chapters()
     {
-        return $this->belongsTo(Chapter::class, 'chapter_id');
+        return $this->belongsTo(EngChapter::class, 'chapter_id');
     }
     public function reference()
     {

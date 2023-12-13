@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use App\Models\Chapter;
 
 class Book extends Model
 {
@@ -21,5 +20,10 @@ class Book extends Model
     public function chapters()
     {
         return $this->hasMany(Chapter::class);
+    }
+
+    public function english_chapters()
+    {
+        return $this->hasMany(EngChapter::class);
     }
 }

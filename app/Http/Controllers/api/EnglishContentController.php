@@ -20,7 +20,7 @@ class EnglishContentController extends Controller
     public function searchByLine(Request $request)
     {
         $line = $request->input('line');
-        $results = EnglishContent::where('line', 'like', "%$line%")->with('chapter','reference','chapter.englishAudio')->paginate(10);
+        $results = EnglishContent::where('line', 'like', "%$line%")->with('english_chapters','reference','english_chapters.englishAudio')->paginate(10);
         return response()->json($results);
     }
 
@@ -141,7 +141,7 @@ class EnglishContentController extends Controller
     public function chapters(Book $book)
     {
         $perPage =10;
-        $chapters = $book->chapters()->paginate($perPage);
+        $chapters = $book->english_chapters()->paginate($perPage);
         $chapters->getCollection()->transform(function ($chapter) use ($book, $chapters, $perPage) {
             $currentPage = $chapters->currentPage();
             $pageCount = EnglishContent::where('book_id', $book->id)
@@ -164,10 +164,12 @@ class EnglishContentController extends Controller
 
     public function content(Book $book, EngChapter $chapter)
     {
-
         try {
             $bookId = $book->id;
             $chapterId = $chapter->id;
+
+
+
             $pageNo = request()->input('page_no');
             if ($bookId !== null && $chapterId !== null && $pageNo !== null) {
                 $contents = EnglishContent::where([
@@ -175,8 +177,6 @@ class EnglishContentController extends Controller
                     'chapter_id' => $chapterId,
                     'page_no' => $pageNo,
                 ])->get();
-
-
                 $totalLineCount = $contents->count();
                 if ($contents->isEmpty()) {
                     return response()->json(['message' => 'No content found.']);
@@ -335,16 +335,23 @@ class EnglishContentController extends Controller
             $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
 
 
+
             if ($bookId !== null && $chapterId !== null) {
                 $contents = EnglishContent::where([
                     'book_id' => $bookId,
                     'chapter_id' => $chapterId,
                 ])->get();
 
+
+
+
+
+
                 $totalLineCount = $contents->count();
                 if ($contents->isEmpty()) {
                     return response()->json(['message' => 'No content found.']);
                 }
+
 
                 $formattedContent = [];
                 $startPageNo = null;
@@ -357,8 +364,11 @@ class EnglishContentController extends Controller
                     }
 
 
-                    $referencePageNo = EnglishContentController::where('page_no',$pageNo)
+
+                    $referencePageNo = EnglishBookReferencePage::where('page_no',$pageNo)
                         ->pluck('reference_page_no')->first();
+
+
 
                     if (!isset($formattedContent[$pageNo])) {
                         $formattedContent[$pageNo] = [
@@ -371,6 +381,8 @@ class EnglishContentController extends Controller
                             'lines' => [], // Added 'lines' array
                         ];
                     }
+
+
 
                     $formattedContent[$pageNo]['data'][] = [
                         'id' => $content->id,
