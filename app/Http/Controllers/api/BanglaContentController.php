@@ -112,50 +112,27 @@ class BanglaContentController extends Controller
 
 
 
-//    public function chapters(Book $book)
-//    {
-//
-//        $startPage = 1;
-//        $chapters = $book->chapters->map(function ($chapter) use ($book, & $startPage) {
-//            $pageCount = BanglaContent::where('book_id', $book->id)
-//                ->where('chapter_id', $chapter->id)
-//                ->distinct('page_no')
-//                ->count('page_no');
-//            $endPage = $startPage + $pageCount - 1;
-//            $chapter->page_count = $pageCount;
-//            $chapter->page_range = "$startPage-$endPage";
-//            $pageNumbers = range($startPage, $endPage);
-//            $chapter->page_numbers = $pageNumbers;
-//            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
-//            $chapter->audio_file = $audioFile;
-//            $startPage = $endPage + 1;
-//            return $chapter;
-//        });
-//        return response()->json($chapters);
-//    }
+    public function chapterListShow(Book $book)
+    {
 
-
-//    public function chapters(Book $book)
-//    {
-//        $perPage = 10;
-//        $chapters = $book->chapters()->paginate($perPage);
-//        $chapters->getCollection()->transform(function ($chapter) use ($book) {
-//            $pageCount = BanglaContent::where('book_id', $book->id)
-//                ->where('chapter_id', $chapter->id)
-//                ->distinct('page_no')
-//                ->count('page_no');
-//            $endPage = $chapter->page + $pageCount - 1;
-//            $chapter->page_count = $pageCount;
-//            $chapter->page_range = "{$chapter->page}-$endPage";
-//            $pageNumbers = range($chapter->page, $endPage);
-//            $chapter->page_numbers = $pageNumbers;
-//            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
-//            $chapter->audio_file = $audioFile;
-//            return $chapter;
-//        });
-//        return response()->json($chapters);
-//    }
-
+        $startPage = 1;
+        $chapters = $book->chapters->map(function ($chapter) use ($book, & $startPage) {
+            $pageCount = BanglaContent::where('book_id', $book->id)
+                ->where('chapter_id', $chapter->id)
+                ->distinct('page_no')
+                ->count('page_no');
+            $endPage = $startPage + $pageCount - 1;
+            $chapter->page_count = $pageCount;
+            $chapter->page_range = "$startPage-$endPage";
+            $pageNumbers = range($startPage, $endPage);
+            $chapter->page_numbers = $pageNumbers;
+            $audioFile = BanglaAudio::where('chapter_id', $chapter->id)->value('file');
+            $chapter->audio_file = $audioFile;
+            $startPage = $endPage + 1;
+            return $chapter;
+        });
+        return response()->json($chapters);
+    }
 
     public function chapters(Book $book)
     {

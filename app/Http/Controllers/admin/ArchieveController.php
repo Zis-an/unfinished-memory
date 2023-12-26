@@ -18,6 +18,8 @@ class ArchieveController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
+
         $imageFile = 'image/archivePhotos';
         if ($request->hasFile('photo')) {
             $image = $request->file('photo')->store($imageFile, 'public');

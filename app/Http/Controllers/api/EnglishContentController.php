@@ -20,9 +20,13 @@ class EnglishContentController extends Controller
     public function searchByLine(Request $request)
     {
         $line = $request->input('line');
+
         $results = EnglishContent::where('line', 'like', "%$line%")->with('english_chapters','reference','english_chapters.englishAudio')->paginate(10);
         return response()->json($results);
     }
+
+
+
 
     public function contentAll($pageNo)
     {
@@ -79,63 +83,27 @@ class EnglishContentController extends Controller
     }
 
 
+    public function chapterListShow(Book $book)
+    {
 
-//    public function chapters(Book $book)
-//    {
-//        $startPage = 1; // Initialize the start page number
-//        $chapters = $book->chapters->map(function ($chapter) use ($book, &$startPage) {
-//            $pageCount = EnglishContent::where('book_id', $book->id)
-//                ->where('chapter_id', $chapter->id)
-//                ->distinct('page_no')
-//                ->count('page_no');
-//
-//            $endPage = $startPage + $pageCount - 1; // Calculate the end page number
-//
-//            $chapter->page_count = $pageCount;
-//            $chapter->page_range = "$startPage-$endPage"; // Store the page range in the chapter object
-//
-//            // Create an array of page numbers within the page range
-//            $pageNumbers = range($startPage, $endPage);
-//            $chapter->page_numbers = $pageNumbers;
-//
-//            $audioFile = EnglishAudio::where('chapter_id', $chapter->id)->value('file');
-//            $chapter->audio_file = $audioFile;
-//
-//            $startPage = $endPage + 1; // Update the start page for the next chapter
-//
-//            return $chapter;
-//        });
-//
-//        $perPage = 10;
-//        $currentPage = request()->input('page', 1);
-//        $pagedData = $chapters->slice(($currentPage - 1) * $perPage, $perPage)->all();
-//        $chapters = new \Illuminate\Pagination\LengthAwarePaginator($pagedData, count($chapters), $perPage);
-//
-//        return response()->json($chapters);
-//    }
-
-//    public function chapters(Book $book)
-//    {
-//        // Assuming $perPage is the number of items you want per page
-//        $perPage = 10; // You can adjust this based on your needs
-//        $chapters = $book->chapters()->paginate($perPage);
-//        $chapters->getCollection()->transform(function ($chapter) use ($book) {
-//            $pageCount = EnglishContent::where('book_id', $book->id)
-//                ->where('chapter_id', $chapter->id)
-//                ->distinct('page_no')
-//                ->count('page_no');
-//            $endPage = $chapter->page + $pageCount - 1;
-//            $chapter->page_count = $pageCount;
-//            $chapter->page_range = "{$chapter->page}-$endPage";
-//            $pageNumbers = range($chapter->page, $endPage);
-//            $chapter->page_numbers = $pageNumbers;
-//            $audioFile = EnglishAudio::where('chapter_id', $chapter->id)->value('file');
-//            $chapter->audio_file = $audioFile;
-//            return $chapter;
-//        });
-//
-//        return response()->json($chapters);
-//    }
+        $startPage = 1;
+        $chapters = $book->english_chapters->map(function ($chapter) use ($book, & $startPage) {
+            $pageCount = EnglishContent::where('book_id', $book->id)
+                ->where('chapter_id', $chapter->id)
+                ->distinct('page_no')
+                ->count('page_no');
+            $endPage = $startPage + $pageCount - 1;
+            $chapter->page_count = $pageCount;
+            $chapter->page_range = "$startPage-$endPage";
+            $pageNumbers = range($startPage, $endPage);
+            $chapter->page_numbers = $pageNumbers;
+            $audioFile = EnglishAudio::where('eng_chapter_id', $chapter->id)->value('file');
+            $chapter->audio_file = $audioFile;
+            $startPage = $endPage + 1;
+            return $chapter;
+        });
+        return response()->json($chapters);
+    }
 
 
     public function chapters(Book $book)

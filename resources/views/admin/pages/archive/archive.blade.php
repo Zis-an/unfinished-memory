@@ -109,14 +109,14 @@
                         <div class="row g-9 mb-8">
                             <div class="col-md-12 fv-row">
                                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Title (EN)</label>
-                                <input type="text" name="title_bn" class="form-control form-control-solid" placeholder="Enter Book Name"/>
+                                <input type="text" name="title_en" class="form-control form-control-solid" placeholder="Enter Book Name"/>
                             </div>
                         </div>
 
                         <div class="row g-9 mb-8">
                             <div class="col-md-12 fv-row">
                                 <label class="d-flex align-items-center fs-6 fw-semibold mb-2 required">Title (BN)</label>
-                                <input type="text" name="title_en" class="form-control form-control-solid" placeholder="Enter Book Name"/>
+                                <input type="text" name="title_bn" class="form-control form-control-solid" placeholder="Enter Book Name"/>
                             </div>
                         </div>
 

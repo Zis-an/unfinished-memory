@@ -23,6 +23,7 @@ class EnglishContentController extends Controller
     }
     public function store(Request $request)
     {
+
         if($request->type == "text") {
             try {
                 $english_lines = [];

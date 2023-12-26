@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/chapter/page/{pageNo}', [BanglaContentController::class, 'contentAll']);
 Route::get('/books',[BanglaContentController::class, 'index']);
 Route::get('/books/{book}/chapters',[BanglaContentController::class, 'chapters']);
+Route::get('/books/{book}/chapter-list-show',[BanglaContentController::class, 'chapterListShow']);
 Route::get('/books/{book}/chapters/{chapter}/content',[BanglaContentController::class, 'content']);
 Route::get('/books/{book}/chapters/{chapter}/all-content', [BanglaContentController::class, 'chapterContent']);
 Route::get('/search',[BanglaContentController::class, 'searchByLine']);
@@ -33,6 +34,7 @@ Route::get('/books/{book}/chapters/{chapter}/all-pages', [BanglaContentControlle
 //public api for english content
 Route::get('/english-chapter/page/{pageNo}', [EnglishContentController::class, 'contentAll']);
 Route::get('/english-books',[EnglishContentController::class, 'index']);
+Route::get('/english-books/{book}/chapter-list-show',[EnglishContentController::class, 'chapterListShow']);
 Route::get('/english-books/{book}/chapters',[EnglishContentController::class, 'chapters']);
 Route::get('/english-books/{book}/chapters/{chapter}/content',[EnglishContentController::class, 'content']);
 Route::get('/english-books/{book}/chapters/{chapter}/all-content', [EnglishContentController::class, 'chapterContent']);
