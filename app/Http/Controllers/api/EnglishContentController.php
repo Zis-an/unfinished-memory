@@ -300,7 +300,7 @@ class EnglishContentController extends Controller
             $bookId = $book->id;
             $chapterId = $chapter->id;
             $chapter = EngChapter::where('id', $chapterId)->pluck('chapter_name')->first();
-            $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
+            $chapterAudio = EnglishAudio::where('eng_chapter_id', $chapterId)->pluck('file')->first();
 
 
 
