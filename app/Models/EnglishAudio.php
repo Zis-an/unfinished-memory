@@ -14,6 +14,6 @@ class EnglishAudio extends Model
     ];
     public function chapter()
     {
-        return $this->belongsTo(Chapter::class,'chapter_id');
+        return $this->belongsTo(EngChapter::class,'chapter_id');
     }
 }

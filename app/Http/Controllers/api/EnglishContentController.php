@@ -21,6 +21,7 @@ class EnglishContentController extends Controller
     {
         $line = $request->input('line');
 
+
         $results = EnglishContent::where('line', 'like', "%$line%")->with('english_chapters','reference','english_chapters.englishAudio')->paginate(10);
         return response()->json($results);
     }
@@ -97,7 +98,7 @@ class EnglishContentController extends Controller
             $chapter->page_range = "$startPage-$endPage";
             $pageNumbers = range($startPage, $endPage);
             $chapter->page_numbers = $pageNumbers;
-            $audioFile = EnglishAudio::where('eng_chapter_id', $chapter->id)->value('file');
+            $audioFile = EnglishAudio::where('chapter_id', $chapter->id)->value('file');
             $chapter->audio_file = $audioFile;
             $startPage = $endPage + 1;
             return $chapter;
@@ -300,7 +301,7 @@ class EnglishContentController extends Controller
             $bookId = $book->id;
             $chapterId = $chapter->id;
             $chapter = EngChapter::where('id', $chapterId)->pluck('chapter_name')->first();
-            $chapterAudio = EnglishAudio::where('eng_chapter_id', $chapterId)->pluck('file')->first();
+            $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
 
 
 

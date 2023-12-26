@@ -27,7 +27,7 @@ class EngChapter extends Model
     }
     public function englishAudio()
     {
-        return $this->hasOne(EnglishAudio::class);
+        return $this->hasOne(EnglishAudio::class, 'chapter_id');
     }
 
 }
