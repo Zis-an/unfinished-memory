@@ -378,15 +378,117 @@ class BanglaContentController extends Controller
 //            return response()->json(['message' => 'An error occurred.']);
 //        }
 //    }
+//    public function chapterContentPages(Book $book, Chapter $chapter)
+//    {
+//
+//
+//        try {
+//            $bookId = $book->id;
+//            $chapterId = $chapter->id;
+//            $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
+//            $chapterAudio = BanglaAudio::where('chapter_id', $chapterId)->pluck('file')->first();
+//            if ($bookId !== null && $chapterId !== null) {
+//                $contents = BanglaContent::where([
+//                    'book_id' => $bookId,
+//                    'chapter_id' => $chapterId,
+//                ])->get();
+//
+//                $totalLineCount = $contents->count();
+//                if ($contents->isEmpty()) {
+//                    return response()->json(['message' => 'No content found.']);
+//                }
+//
+//                $formattedContent = [];
+//                $startPageNo = null;
+//
+//                foreach ($contents as $content) {
+//                    $pageNo = $content->page_no;
+//
+//                    if ($startPageNo === null) {
+//                        $startPageNo = $pageNo;
+//                    }
+//
+//
+//                    $referencePageNo = BanglaBookReferencePage::where('page_no',$pageNo)
+//                        ->pluck('reference_page_no')->first();
+//
+//                    if (!isset($formattedContent[$pageNo])) {
+//                        $formattedContent[$pageNo] = [
+//                            'total_line' => 0,
+//                            'page_number' => $pageNo,
+//                            'reference_page_number' => $referencePageNo,
+//                            'data' => [],
+//                            'start_time' => [],
+//                            'end_time' => [],
+//                            'lines' => [],
+//                        ];
+//                    }
+//
+//                    $formattedContent[$pageNo]['data'][] = [
+//                        'id' => $content->id,
+//                        'book_id' => $content->book_id,
+//                        'chapter_id' => $content->chapter_id,
+//                        'type' => $content->type,
+//                        'line' => $content->line,
+//                        'page_no' => $content->page_no,
+//                        'start_time' => $content->start_time,
+//                        'end_time' => $content->end_time,
+//                        'image_file' => $content->image_file,
+//                        'created_at' => $content->created_at,
+//                        'updated_at' => $content->updated_at,
+//                    ];
+//
+//                    $formattedContent[$pageNo]['lines'][] = $content->line;
+//
+//                    $startTime = $content->start_time;
+//                    $endTime = $content->end_time;
+//
+//                    if (!is_null($startTime)) {
+//                        list($minutes, $seconds, $milliseconds) = sscanf($startTime, "%d:%d:%d");
+//                        $formattedStartTime = $minutes * 60000 + $seconds * 1000 + $milliseconds;
+//                        $formattedContent[$pageNo]['start_time'][] = $formattedStartTime;
+//                    } else {
+//                        $formattedContent[$pageNo]['start_time'][] = null;
+//                    }
+//
+//                    if (!is_null($endTime)) {
+//                        list($minutes, $seconds, $milliseconds) = sscanf($endTime, "%d:%d:%d");
+//                        $formattedEndTime = $minutes * 60000 + $seconds * 1000 + $milliseconds;
+//                        $formattedContent[$pageNo]['end_time'][] = $formattedEndTime;
+//                    } else {
+//                        $formattedContent[$pageNo]['end_time'][] = null;
+//                    }
+//
+//                    $formattedContent[$pageNo]['total_line']++;
+//                }
+//
+//                if (empty($formattedContent)) {
+//                    return response()->json(['message' => 'No content found.']);
+//                }
+//                $lastPageNo = "" . max(array_keys($formattedContent));
+//                return response()->json([
+//                    'startPageNo' => $startPageNo,
+//                    'lastPageNo' => $lastPageNo,
+//                    'chapter_name' => $chapter,
+//                    'chapter_audio' => "storage/audio/audioBanglaFile/".$chapterAudio,
+//                    'contents' => array_values($formattedContent),
+//                ]);
+//            }
+//
+//            return response()->json(['message' => 'Invalid input. Please provide a valid book and chapter.']);
+//        } catch (Exception $e) {
+//            return response()->json(['message' => 'An error occurred.']);
+//        }
+//    }
+
     public function chapterContentPages(Book $book, Chapter $chapter)
     {
-
-
         try {
             $bookId = $book->id;
             $chapterId = $chapter->id;
             $chapter = Chapter::where('id', $chapterId)->pluck('chapter_name')->first();
             $chapterAudio = BanglaAudio::where('chapter_id', $chapterId)->pluck('file')->first();
+
             if ($bookId !== null && $chapterId !== null) {
                 $contents = BanglaContent::where([
                     'book_id' => $bookId,
@@ -466,13 +568,12 @@ class BanglaContentController extends Controller
                     return response()->json(['message' => 'No content found.']);
                 }
                 //$lastPageNo = max(array_keys($formattedContent));
-                //$chapter = Chapter::where('id', $chapterId)->pluck('name')->first();
                 $lastPageNo = "" . max(array_keys($formattedContent));
                 return response()->json([
                     'startPageNo' => $startPageNo,
                     'lastPageNo' => $lastPageNo,
                     'chapter_name' => $chapter,
-                    'chapter_audio' => "storage/audio/audioBanglaFile/".$chapterAudio,
+                    'chapter_audio' => $chapterAudio,
                     'contents' => array_values($formattedContent),
                 ]);
             }
@@ -482,5 +583,4 @@ class BanglaContentController extends Controller
             return response()->json(['message' => 'An error occurred.']);
         }
     }
-
 }

@@ -47,7 +47,7 @@
                                 <td>
                                     @if($data->file)
                                         <audio controls>
-                                            <source src="{{asset('storage/audio/audioBanglaFile/'.$data->file)}}" type="audio/mpeg">
+                                            <source src="{{asset('storage/audio/audioEnglishFile/'.$data->file)}}" type="audio/mpeg">
                                         </audio>
                                     @else
                                         <span class="badge badge-danger">No File Found</span>

@@ -302,43 +302,24 @@ class EnglishContentController extends Controller
             $chapterId = $chapter->id;
             $chapter = EngChapter::where('id', $chapterId)->pluck('chapter_name')->first();
             $chapterAudio = EnglishAudio::where('chapter_id', $chapterId)->pluck('file')->first();
-
-
-
             if ($bookId !== null && $chapterId !== null) {
                 $contents = EnglishContent::where([
                     'book_id' => $bookId,
                     'chapter_id' => $chapterId,
                 ])->get();
-
-
-
-
-
-
                 $totalLineCount = $contents->count();
                 if ($contents->isEmpty()) {
                     return response()->json(['message' => 'No content found.']);
                 }
-
-
                 $formattedContent = [];
                 $startPageNo = null;
-
                 foreach ($contents as $content) {
                     $pageNo = $content->page_no;
-
                     if ($startPageNo === null) {
-                        $startPageNo = $pageNo; // Set the start page number
+                        $startPageNo = $pageNo;
                     }
-
-
-
                     $referencePageNo = EnglishBookReferencePage::where('page_no',$pageNo)
                         ->pluck('reference_page_no')->first();
-
-
-
                     if (!isset($formattedContent[$pageNo])) {
                         $formattedContent[$pageNo] = [
                             'total_line' => 0,
@@ -350,9 +331,6 @@ class EnglishContentController extends Controller
                             'lines' => [], // Added 'lines' array
                         ];
                     }
-
-
-
                     $formattedContent[$pageNo]['data'][] = [
                         'id' => $content->id,
                         'book_id' => $content->book_id,
@@ -366,12 +344,9 @@ class EnglishContentController extends Controller
                         'created_at' => $content->created_at,
                         'updated_at' => $content->updated_at,
                     ];
-
                     $formattedContent[$pageNo]['lines'][] = $content->line; // Add the 'line' to the 'lines' array
-
                     $startTime = $content->start_time;
                     $endTime = $content->end_time;
-
                     if (!is_null($startTime)) {
                         list($minutes, $seconds, $milliseconds) = sscanf($startTime, "%d:%d:%d");
                         $formattedStartTime = $minutes * 60000 + $seconds * 1000 + $milliseconds;
@@ -379,7 +354,6 @@ class EnglishContentController extends Controller
                     } else {
                         $formattedContent[$pageNo]['start_time'][] = null;
                     }
-
                     if (!is_null($endTime)) {
                         list($minutes, $seconds, $milliseconds) = sscanf($endTime, "%d:%d:%d");
                         $formattedEndTime = $minutes * 60000 + $seconds * 1000 + $milliseconds;
@@ -387,24 +361,20 @@ class EnglishContentController extends Controller
                     } else {
                         $formattedContent[$pageNo]['end_time'][] = null;
                     }
-
                     $formattedContent[$pageNo]['total_line']++;
                 }
-
                 if (empty($formattedContent)) {
                     return response()->json(['message' => 'No content found.']);
                 }
-                //$lastPageNo = max(array_keys($formattedContent));
                 $lastPageNo = "" . max(array_keys($formattedContent));
                 return response()->json([
                     'startPageNo' => $startPageNo,
                     'lastPageNo' => $lastPageNo,
                     'chapter_name' => $chapter,
-                    'chapter_audio' => "storage/audio/audioBanglaFile/".$chapterAudio,
+                    'chapter_audio' => $chapterAudio,
                     'contents' => array_values($formattedContent),
                 ]);
             }
-
             return response()->json(['message' => 'Invalid input. Please provide a valid book and chapter.']);
         } catch (Exception $e) {
             return response()->json(['message' => 'An error occurred.']);
